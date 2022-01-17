@@ -1,0 +1,525 @@
+# [Amphiris talisman]
+#===================================================
+command /talisman [<text>] [<text>] [<text>]:
+   aliases: tal
+   trigger:
+      if player is op:
+         #======
+         if arg-1 is "add":
+            #====== Stop conditions
+            if arg-2 is not set:
+               send "&d&l[&6&l⌛&d&l] &c/talisman add <numéro du sort> (en tenant le talisman dans la main)" to player
+               stop
+            #======
+            if player's tool is air:
+               send "&d&l[&6&l⌛&d&l] &cPas de talisman en main !" to player
+               stop
+            #======
+            else if {talismanleglist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cTalisman invalide (déjà un talisman) !" to player
+               stop
+            #======
+            else if {talismanlist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cTalisman déjà ajouté !" to player
+               stop
+            #======
+            else if {parcheminlist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cC'est un parchemin !" to player
+               stop
+            #======
+            else if {parchemincslist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cC'est un parchemin CS !" to player
+               stop
+            #====== Effect
+            add name of player's tool to {talismanlist::*}
+            set {talisman::%name of player's tool%::1} to arg-2
+            send "&d&l[&6&l⌛&d&l] %name of player's tool% &aajouté" to player
+         #======
+         else if arg-1 is "addleg":
+            #====== Stop conditions
+            if arg-2 is not set:
+               send "&d&l[&6&l⌛&d&l] &c/talisman addleg <numéro du sort> (en tenant le talisman dans la main)" to player
+               stop
+            #======
+            if player's tool is air:
+               send "&d&l[&6&l⌛&d&l] &cPas de talisman légendaire en main !" to player
+               stop
+            #======
+            else if {talismanleglist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cTalisman légendaire déjà ajouté !" to player
+               stop
+            #======
+            else if {talismanlist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cTalisman invalide (déjà un talisman) !" to player
+               stop
+            #======
+            else if {parcheminlist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cC'est un parchemin !" to player
+               stop
+            #======
+            else if {parchemincslist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cC'est un parchemin CS !" to player
+               stop
+            #====== Effect
+            add name of player's tool to {talismanleglist::*}
+            set {talismanleg::%name of player's tool%::1} to arg-2
+            send "&d&l[&6&l⌛&d&l] %name of player's tool% &aajouté" to player
+         #======
+         else if arg-1 is "addparch":
+            #====== Stop conditions
+            if arg-2 is not set:
+               send "&d&l[&6&l⌛&d&l] &c/talisman addparch <numéro du sort> (en tenant le parchemin dans la main)" to player
+               stop
+            #======
+            if player's tool is air:
+               send "&d&l[&6&l⌛&d&l] &cPas de parchemin en main !" to player
+               stop
+            #======
+            else if {talismanleglist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cC'est un talisman légendaire !" to player
+               stop
+            #======
+            else if {talismanlist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cC'est un talisman !" to player
+               stop
+            #======
+            else if {parcheminlist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cParchemin déjà ajouté !" to player
+               stop
+            #======
+            else if {parchemincslist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cC'est un parchemin CS !" to player
+               stop
+            #====== Effect
+            add name of player's tool to {parcheminlist::*}
+            set {parchemin::%name of player's tool%::1} to arg-2
+            send "&d&l[&6&l⌛&d&l] %name of player's tool% &aajouté" to player
+         #======
+         else if arg-1 is "addparchcs":
+            #====== Stop conditions
+            if arg-2 is not set:
+               send "&d&l[&6&l⌛&d&l] &c/talisman addparchcs <numéro de l'église> (en tenant le parchemin dans la main)" to player
+               stop
+            #======
+            if player's tool is air:
+               send "&d&l[&6&l⌛&d&l] &cPas de parchemin en main !" to player
+               stop
+            #======
+            else if {talismanleglist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cC'est un talisman légendaire !" to player
+               stop
+            #======
+            else if {talismanlist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cC'est un talisman !" to player
+               stop
+            #======
+            else if {parcheminlist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cC'est un parchemin classique !" to player
+               stop
+            #======
+            else if {parchemincslist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cParchemin CS déjà ajouté !" to player
+               stop
+            #====== Effect
+            add name of player's tool to {parchemincslist::*}
+            set {parchemincs::%name of player's tool%::1} to arg-2
+            send "&d&l[&6&l⌛&d&l] %name of player's tool% &aajouté" to player
+         #======
+         else if arg-1 is "addarme":
+            #====== Stop conditions
+            if arg-2 is not set:
+               send "&d&l[&6&l⌛&d&l] &c/talisman addarme <nom du sort> <magie> (en tenant l'arme dans la main)" to player
+               stop
+            #======
+            if player's tool is air:
+               send "&d&l[&6&l⌛&d&l] &cPas d'arme en main !" to player
+               stop
+            #======
+            else if {talismanleglist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cC'est un talisman légendaire !" to player
+               stop
+            #======
+            else if {talismanlist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cC'est un talisman !" to player
+               stop
+            #======
+            else if {parcheminlist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cC'est un parchemin !" to player
+               stop
+            #======
+            else if {armelist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cArme déjà ajouté !" to player
+               stop
+            #======
+            else if {parchemincslist::*} contains name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cC'est un parchemin CS !" to player
+               stop
+            #====== Effect
+            add name of player's tool to {armelist::*}
+            set {arme::%name of player's tool%::1} to arg-2
+            set {arme::%name of player's tool%::2} to arg-3
+            send "&d&l[&6&l⌛&d&l] %name of player's tool% &aajouté" to player
+         #======
+         else if arg-1 is "del":
+            #====== Stop conditions
+            if player's tool is air:
+               send "&d&l[&6&l⌛&d&l] &cPas de talisman en main !" to player
+               stop
+            #======
+            else if {talismanlist::*} doesn't contain name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cPas de talisman en main !" to player
+               stop
+            #====== Effect
+            delete {talisman::%name of player's tool%::1}
+            remove name of player's tool from {talismanlist::*}
+            send "&d&l[&6&l⌛&d&l] %name of player's tool% &csupprimé" to player
+         #======
+         else if arg-1 is "delleg":
+            #====== Stop conditions
+            if player's tool is air:
+               send "&d&l[&6&l⌛&d&l] &cPas de talisman légendaire en main !" to player
+               stop
+            #======
+            else if {talismanleglist::*} doesn't contain name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cPas de talisman légendaire en main !" to player
+               stop
+            #====== Effect
+            delete {talismanleg::%name of player's tool%::1}
+            remove name of player's tool from {talismanleglist::*}
+            send "&d&l[&6&l⌛&d&l] %name of player's tool% &csupprimé" to player
+         #======
+         else if arg-1 is "delparch":
+            #====== Stop conditions
+            if player's tool is air:
+               send "&d&l[&6&l⌛&d&l] &cPas de parchemin en main !" to player
+               stop
+            #======
+            else if {parcheminlist::*} doesn't contain name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cPas de parchemin en main !" to player
+               stop
+            #====== Effect
+            delete {parchemin::%name of player's tool%::1}
+            remove name of player's tool from {parcheminlist::*}
+            send "&d&l[&6&l⌛&d&l] %name of player's tool% &csupprimé" to player
+         #======
+         else if arg-1 is "delparchcs":
+            #====== Stop conditions
+            if player's tool is air:
+               send "&d&l[&6&l⌛&d&l] &cPas de parchemin CS en main !" to player
+               stop
+            #======
+            else if {parchemincslist::*} doesn't contain name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cPas de parchemin CS en main !" to player
+               stop
+            #====== Effect
+            delete {parchemincs::%name of player's tool%::1}
+            remove name of player's tool from {parchemincslist::*}
+            send "&d&l[&6&l⌛&d&l] %name of player's tool% &csupprimé" to player
+         #======
+         else if arg-1 is "delarme":
+            #====== Stop conditions
+            if player's tool is air:
+               send "&d&l[&6&l⌛&d&l] &cPas d'arme en main !" to player
+               stop
+            #======
+            else if {armelist::*} doesn't contain name of player's tool:
+               send "&d&l[&6&l⌛&d&l] &cPas d'arme en main !" to player
+               stop
+            #====== Effect
+            delete {arme::%name of player's tool%::2}
+            delete {arme::%name of player's tool%::1}
+            remove name of player's tool from {armelist::*}
+            send "&d&l[&6&l⌛&d&l] %name of player's tool% &csupprimé" to player
+         #======
+         else if arg-1 is "delall":
+            #delete {talisman::*}
+            #delete {talismanlist::*}
+            #delete {talismanleg::*}
+            #delete {talismanleglist::*}
+            #send "&d&l[&6&l⌛&d&l] &cTous les talismans ont été supprimés !" to player
+            send "&d&l[&6&l⌛&d&l] &cCommande désactivée" to player
+         #======
+         else if arg-1 is "list":
+            send "&d&l[&6&l⌛&d&l] &fListe des talismans:" to player
+            loop {talismanlist::*}:
+               wait 0.05 second
+               send "- %loop-value%" to player
+
+            send "" to player
+            send "&d&l[&6&l⌛&d&l] &fListe des talismans légendaires:" to player
+            loop {talismanleglist::*}:
+               wait 0.05 second
+               send "- %loop-value%" to player
+
+            send "" to player
+            send "&d&l[&6&l⌛&d&l] &fListe des parchemins:" to player
+            loop {parcheminlist::*}:
+               wait 0.05 second
+               send "- %loop-value%" to player
+
+            send "" to player
+            send "&d&l[&6&l⌛&d&l] &fListe des parchemins CS:" to player
+            loop {parchemincslist::*}:
+               wait 0.05 second
+               send "- %loop-value%" to player
+
+            send "" to player
+            send "&d&l[&6&l⌛&d&l] &fListe des armes:" to player
+            loop {armelist::*}:
+               wait 0.05 second
+               send "- %loop-value%" to player
+         #======
+         else if arg-1 is "help":
+            send "&d&l[&6&l⌛&d&l] &eManuel du système de talisman:" to player
+            send "&e- /tal add <numéro du sort> &7- Ajoute l'item en main dans la liste des talismans et l'associe au sort indiqué" to player
+            send "&e- /tal addleg <numéro du sort> &7- Ajoute l'item en main dans la liste des talismans légendaires et l'associe au sort indiqué" to player
+            send "&e- /tal addparch <numéro du sort> &7- Ajoute l'item en main dans la liste des parchemins et l'associe au sort indiqué" to player
+            send "&e- /tal addparchcs <numéro de l'église> &7- Ajoute l'item en main dans la liste des parchemins CS et l'associe au CS indiqué" to player
+            send "&e- /tal addarme <nom du sort> <magie> &7- Ajoute l'item en main dans la liste des armes et l'associe à l'effet indiqué" to player
+            send "&e- /tal del &7- Retire l'item en main de la liste des talismans" to player
+            send "&e- /tal delleg &7- Retire l'item en main de la liste des talismans légendaires" to player
+            send "&e- /tal delparch &7- Retire l'item en main de la liste des parchemins" to player
+            send "&e- /tal delparchcs &7- Retire l'item en main de la liste des parchemins CS" to player
+            send "&e- /tal delarme &7- Retire l'item en main de la liste des armes" to player
+            send "&e- /tal delall &7- Retire tous les talismans (talismans légendaires inclus)" to player
+            send "&e- /tal list &7- Affiche la liste des objets cliquables" to player
+         #======
+         else:
+            send "&d&l[&6&l⌛&d&l] &cTapez /tal help pour voir comment marche la commande" to player
+         #======
+      else:
+         send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+#===================================================
+on left click:
+   if {talismanlist::*} contains name of player's tool:
+      cancel event
+   else if {talismanleglist::*} contains name of player's tool:
+      cancel event
+   else if {parcheminlist::*} contains name of player's tool:
+      cancel event
+#======
+on right click:
+   if {talismanlist::*} contains name of player's tool:
+      cancel event
+      make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlock%{talisman::%name of player's tool%::1}%] molette %{talisman::%name of player's tool%::1}%"
+      #======
+      if {talisman::%name of player's tool%::1} is "1":
+         send "&bSortilège sélectionné: &6Accio" to player
+      else if {talisman::%name of player's tool%::1} is "2":
+         send "&bSortilège sélectionné: &6Aguamenti" to player
+      else if {talisman::%name of player's tool%::1} is "3":
+         send "&bSortilège sélectionné: &6Allohomora" to player
+      else if {talisman::%name of player's tool%::1} is "4":
+         send "&bSortilège sélectionné: &6Ascendio" to player
+      else if {talisman::%name of player's tool%::1} is "5":
+         send "&bSortilège sélectionné: &6Et fulgeas" to player
+      else if {talisman::%name of player's tool%::1} is "6":
+         send "&bSortilège sélectionné: &6Expecto patronum" to player
+      else if {talisman::%name of player's tool%::1} is "7":
+         send "&bSortilège sélectionné: &6Flambios" to player
+      else if {talisman::%name of player's tool%::1} is "8":
+         send "&bSortilège sélectionné: &6Foraminis" to player
+      else if {talisman::%name of player's tool%::1} is "9":
+         send "&bSortilège sélectionné: &6Frigus" to player
+      else if {talisman::%name of player's tool%::1} is "10":
+         send "&bSortilège sélectionné: &6Incendio" to player
+      else if {talisman::%name of player's tool%::1} is "11":
+         send "&bSortilège sélectionné: &6Levicorpus" to player
+      else if {talisman::%name of player's tool%::1} is "12":
+         send "&bSortilège sélectionné: &6Lumos" to player
+      else if {talisman::%name of player's tool%::1} is "13":
+         send "&bSortilège sélectionné: &6Mordere" to player
+      else if {talisman::%name of player's tool%::1} is "14":
+         send "&bSortilège sélectionné: &6Necrosis" to player
+      else if {talisman::%name of player's tool%::1} is "15":
+         send "&bSortilège sélectionné: &6Nox" to player
+      else if {talisman::%name of player's tool%::1} is "16":
+         send "&bSortilège sélectionné: &6Periculum" to player
+      else if {talisman::%name of player's tool%::1} is "17":
+         send "&bSortilège sélectionné: &6Protego" to player
+      else if {talisman::%name of player's tool%::1} is "18":
+         send "&bSortilège sélectionné: &6Protego diabolica" to player
+      else if {talisman::%name of player's tool%::1} is "19":
+         send "&bSortilège sélectionné: &6Repulso" to player
+      else if {talisman::%name of player's tool%::1} is "20":
+         send "&bSortilège sélectionné: &6Revelio" to player
+      else if {talisman::%name of player's tool%::1} is "21":
+         send "&bSortilège sélectionné: &6Revigor" to player
+      else if {talisman::%name of player's tool%::1} is "22":
+         send "&bSortilège sélectionné: &6Sectumsempra" to player
+      else if {talisman::%name of player's tool%::1} is "23":
+         send "&bSortilège sélectionné: &6Siccatum" to player
+      else if {talisman::%name of player's tool%::1} is "24":
+         send "&bSortilège sélectionné: &6Spiritus draconis" to player
+      else if {talisman::%name of player's tool%::1} is "25":
+         send "&bSortilège sélectionné: &6Stupefix" to player
+      else if {talisman::%name of player's tool%::1} is "26":
+         send "&bSortilège sélectionné: &6Venenum" to player
+      else if {talisman::%name of player's tool%::1} is "27":
+         send "&bSortilège sélectionné: &6Wingardium leviosa" to player
+      else:
+         send "&bSortilège sélectionné: &6Pardon ?" to player
+      #======
+   else if {talismanleglist::*} contains name of player's tool:
+      cancel event
+      #======
+      if {talismanleg::%name of player's tool%::1} is "101":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockarbi1] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eValse endiablée au clair de Lune" to player
+      else if {talismanleg::%name of player's tool%::1} is "102":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockarbi2] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eRedirection des flux" to player
+      else if {talismanleg::%name of player's tool%::1} is "103":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockarbi3] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eSe fier au sort, les yeux fermés" to player
+      else if {talismanleg::%name of player's tool%::1} is "104":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlocklib1] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eMauvais œil" to player
+      else if {talismanleg::%name of player's tool%::1} is "105":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlocklib2] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eFeu de la Fosse" to player
+      else if {talismanleg::%name of player's tool%::1} is "106":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockterre1] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eLa colère qui déchire le ciel" to player
+      else if {talismanleg::%name of player's tool%::1} is "107":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockterre2] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eVent ascendant" to player
+      else if {talismanleg::%name of player's tool%::1} is "108":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockhecate1] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eTornade de chagrin" to player
+      else if {talismanleg::%name of player's tool%::1} is "109":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockhecate2] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eProtection de la Mère Obscure" to player
+      else if {talismanleg::%name of player's tool%::1} is "110":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockvaudou1] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eSouffle du cimetière" to player
+      else if {talismanleg::%name of player's tool%::1} is "111":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockvaudou2] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eDanse avec les fantômes" to player
+      else if {talismanleg::%name of player's tool%::1} is "113":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockgeass1] molette 112"
+         send "&cSortilège sélectionné: &eSynchronisation" to player
+      else if {talismanleg::%name of player's tool%::1} is "112":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockgeass2] molette 113"
+         send "&cSortilège sélectionné: &eObéissance absolue" to player
+      else if {talismanleg::%name of player's tool%::1} is "114":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockgeass3] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eSilence absolu" to player
+      else if {talismanleg::%name of player's tool%::1} is "115":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockcaly1] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eGeyser" to player
+      else if {talismanleg::%name of player's tool%::1} is "116":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockcaly2] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eUn fragment d'Éternité" to player
+      else if {talismanleg::%name of player's tool%::1} is "117":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockexo1] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eLumière salutaire" to player
+      else if {talismanleg::%name of player's tool%::1} is "118":
+         make console execute command "/execute as %player% at @s run scoreboard players set @s[tag=unlockexo2] molette %{talismanleg::%name of player's tool%::1}%"
+         send "&cSortilège sélectionné: &eExorcisme" to player
+      #======
+   else if {parcheminlist::*} contains name of event-item:
+      cancel event
+      #======
+      if {parchemin::%name of event-item%::1} is "1":
+         set {_magie} to 1000
+         set {_nomParch} to "neant"
+      else if {parchemin::%name of event-item%::1} is "2":
+         set {_magie} to 400
+         set {_nomParch} to "furie"
+      else if {parchemin::%name of event-item%::1} is "3":
+         set {_magie} to 1000
+         set {_nomParch} to "aube"
+      else if {parchemin::%name of event-item%::1} is "4":
+         set {_magie} to 500
+         set {_nomParch} to "etoile"
+      else if {parchemin::%name of event-item%::1} is "5":
+         set {_magie} to 500
+         set {_nomParch} to "expelli"
+      else if {parchemin::%name of event-item%::1} is "6":
+         set {_magie} to 500
+         set {_nomParch} to "judas"
+      else if {parchemin::%name of event-item%::1} is "7":
+         make console execute command "/execute as %player% at @s unless entity @s[scores={neant=1..}] as @s[tag=unlockSPE7,scores={magie=1000..}] unless entity @e[distance=..150,tag=anihi] run function namespace:embrasse"
+         stop
+      else if {parchemin::%name of event-item%::1} is "8":
+         set {_magie} to 950
+         set {_nomParch} to "ebene"
+      else if {parchemin::%name of event-item%::1} is "9":
+         set {_magie} to 500
+         set {_nomParch} to "chasseur"
+      else if {parchemin::%name of event-item%::1} is "10":
+         set {_magie} to 650
+         set {_nomParch} to "forcesol"
+         make console execute command "/execute as %player% at @s[tag=unlockSPE%{parchemin::%name of event-item%::1}%,scores={magie=%{_magie}%..}] run function namespace:%{_nomParch}%"
+         stop
+      else if {parchemin::%name of event-item%::1} is "11":
+         set {_magie} to 500
+         set {_nomParch} to "chocvenin"
+      else if {parchemin::%name of event-item%::1} is "12":
+         set {_magie} to 500
+         set {_nomParch} to "cauchemar"
+         make console execute command "/execute as %player% at @s[scores={magie=%{_magie}%..},tag=unlockSPE%{parchemin::%name of event-item%::1}%] at @s unless entity @e[distance=..250,tag=anihi] run function namespace:%{_nomParch}%"
+         stop
+
+      make console execute command "/execute as %player% at @s[tag=unlockSPE%{parchemin::%name of event-item%::1}%,scores={magie=%{_magie}%..}] unless entity @e[distance=..250,tag=anihi] run function namespace:%{_nomParch}%"
+      #======
+   else if {parchemincslist::*} contains name of player's tool:
+      cancel event
+      #======
+      set {_magie} to 999
+      if {parchemincs::%name of event-item%::1} is "1":
+         set {_nomParch} to "septp"
+      else if {parchemincs::%name of event-item%::1} is "2":
+         set {_nomParch} to "fruitp"
+      else if {parchemincs::%name of event-item%::1} is "3":
+         set {_nomParch} to "ragna"
+      else if {parchemincs::%name of event-item%::1} is "4":
+         set {_nomParch} to "jeudesombres"
+      else if {parchemincs::%name of event-item%::1} is "5":
+         set {_magie} to 500
+         set {_nomParch} to "stala"
+      else if {parchemincs::%name of event-item%::1} is "6":
+         set {_nomParch} to "flotpho"
+      else if {parchemincs::%name of event-item%::1} is "7":
+         set {_nomParch} to "ebene"
+      else if {parchemincs::%name of event-item%::1} is "8":
+         set {_nomParch} to "atoutjamais"
+
+      if player is op:
+         make player execute command "/execute as @s[scores={eglise=9}] at @s run function namespace:%{_nomParch}%"
+      else:
+         make console execute command "/execute as %player% at @s[scores={eglise=%{parchemincs::%name of event-item%::1}%,magie=%{_magie}%..},tag=unlockSPEclasse] unless entity @e[distance=..250,tag=anihi] run function namespace:%{_nomParch}%"
+      #======
+   else if {armelist::*} contains name of player's tool:
+      cancel event
+      #======
+      if "%{arme::%name of player's tool%::1}%" is "eventail1":
+         make console execute command "/execute as %player% at @s[scores={magie=%{arme::%name of player's tool%::2}%..}] unless entity @e[distance=..250,tag=anihi] run function namespace:%{arme::%name of player's tool%::1}%"
+         stop
+      else if "%{arme::%name of player's tool%::1}%" is "detection":
+         make console execute command "/execute as %player% at @s[scores={magie=%{arme::%name of player's tool%::2}%..}] unless entity @e[distance=..250,tag=anihi] run function namespace:%{arme::%name of player's tool%::1}%"
+         stop
+      else if "%{arme::%name of player's tool%::1}%" is "excanoir":
+         make console execute command "/execute as %player% at @s[scores={magie=%{arme::%name of player's tool%::2}%..}] unless entity @e[distance=..250,tag=anihi] run function namespace:%{arme::%name of player's tool%::1}%"
+         stop
+      make console execute command "/execute as %player% at @s[scores={magie=%{arme::%name of player's tool%::2}%..}] run function namespace:%{arme::%name of player's tool%::1}%"
+#======
+on craft:
+   loop 9 times:
+      if {talismanlist::*} contains name of slot loop-number of player's current inventory:
+         cancel event
+      if {talismanleglist::*} contains name of slot loop-number of player's current inventory:
+         cancel event
+      if {parcheminlist::*} contains name of slot loop-number of player's current inventory:
+         cancel event
+      if {parchemincslist::*} contains name of slot loop-number of player's current inventory:
+         cancel event
+      if {armelist::*} contains name of slot loop-number of player's current inventory:
+         cancel event
+#===================================================
+on place:
+   if {talismanleglist::*} contains name of offhand tool:
+      cancel event
+   if {talismanlist::*} contains name of offhand tool:
+      cancel event

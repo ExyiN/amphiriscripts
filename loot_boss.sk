@@ -1,0 +1,93 @@
+options:
+    pmsg: &d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande.
+
+function lbHelp(p: player):
+    send "&d&l[&6&l⌛&d&l] &eManuel du système de loot de boss :" to {_p}
+    send "&e- /lb addcoffre <nom> &7- Défini l'item en main comme un coffre à loot" to {_p}
+    send "&e- /lb additem <nom> &7- Lie l'item en main au nom pour l'obtenir via le coffre correspondant" to {_p}
+    send "&e- /lb remove <nom> &7- Retire le coffre et l'item lié à ce nom" to {_p}
+    send "&e- /lb list &7- Affiche la liste des items NCL" to {_p}
+    send "&e- /lb help &7- Affiche ce manuel d'instruction" to {_p}
+    send "&e- /lb reload &7- Reload le script" to {_p}
+
+function lbAddCoffre(p: player, loot: text):
+    if {lbList::*} contains {_loot}:
+        if {lbCoffre.%{_loot}%} is set:
+            send "&aNom déjà utilisé" to {_p}
+        else:
+            set {lbCoffre.%{_loot}%} to {_p}'s tool
+            send "&aCoffre %{_loot}% défini sur %name of {_p}'s tool%" to {_p}
+
+    else:
+        add {_loot} to {lbList::*}
+        set {lbCoffre.%{_loot}%} to {_p}'s tool
+        send "&aCoffre %{_loot}% défini sur %name of {_p}'s tool%" to {_p}
+
+function lbAddItem(p: player, loot: text):
+    if {lbList::*} contains {_loot}:
+        if {lbItem.%{_loot}%} is set:
+            send "&aNom déjà utilisé" to {_p}
+        else:
+            set {lbItem.%{_loot}%} to {_p}'s tool
+            send "&aItem %{_loot}% défini sur %name of {_p}'s tool%" to {_p}
+    else:
+        add {_loot} to {lbList::*}
+        set {lbItem.%{_loot}%} to {_p}'s tool
+        send "&aItem %{_loot}% défini sur %name of {_p}'s tool%" to {_p}
+
+function lbRemove(p: player, loot: text):
+    if {lbList::*} doesn't contain {_loot}:
+        send "&aLoot non existant, faites &6/lb list &apour voir la liste des items" to {_p}
+    else:
+        delete {lbCoffre.%{_loot}%}
+        delete {lbItem.%{_loot}%}
+        remove {_loot} from {lbList::*}
+        send "&aCoffre et item de &6%{_loot}% &asupprimés !" to {_p}
+
+function lbList(p: player):
+    send "&d&l[&6&l⌛&d&l] &fListe des loots de boss (loot : coffre / item):" to {_p}
+    loop {lbList::*}:
+        send "&7- &e%loop-value% &7: %{lbCoffre.%loop-value%}% &7/ %{lbItem.%loop-value%}%" to {_p}
+
+command /lb [<text>] [<text>]:
+    permission: amph.lb.use
+    permission message: {@pmsg}
+    trigger:
+        if arg-1 is not set:
+            lbHelp(player)
+            stop
+        if arg-1 is not "addcoffre":
+            if arg-1 is not "additem":
+                if arg-1 is not "remove":
+                    if arg-1 is not "list":
+                        if arg-1 is not "help":
+                            if arg-1 is not "reload":
+                                lbHelp(player)
+                                stop
+        if arg-2 is not set:
+            if arg-1 is not "list":
+                if arg-1 is not "help":
+                    if arg-1 is not "reload":
+                        lbHelp(player)
+                    else:
+                        make player execute command "/sk reload loot_boss"
+                else:
+                    lbHelp(player)
+            else:
+                lbList(player)
+        else:
+            if arg-1 is "addcoffre":
+                lbAddCoffre(player,arg-2)
+            else if arg-1 is "additem":
+                lbAddItem(player,arg-2)
+            else:
+                lbRemove(player,arg-2)
+
+on right click:
+    loop {lbList::*}:
+        if name of player's tool is name of {lbCoffre.%loop-value%}:
+            set {_nbItem} to item amount of player's tool
+            set player's tool to air
+            give player {_nbItem} of {lbItem.%loop-value%}
+            send "&eVous avez reçu &c&l%{_nbItem}% %name of {lbItem.%loop-value%}%" to player
+            exit loop

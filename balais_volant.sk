@@ -1,0 +1,9 @@
+every 1 second in "azerty":
+    loop all players:
+        if name of loop-player's tool is "Balais magique":
+            apply slow falling without particles to loop-player for 1 second
+
+on right click:
+    if name of player's tool is "Balais magique":
+        push the player forwards at speed 0.6
+        push the player upwards at speed 0.3

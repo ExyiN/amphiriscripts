@@ -1,0 +1,56 @@
+# [Amphiris gamemode lock for OP]
+#===================================================
+command /gmlock [<text>]:
+   trigger:
+      if player is op:
+         if arg-1 is not set:
+            if {gmlock.%uuid of player%} is not set:
+               set {gmlock.%uuid of player%} to true
+               send "&d&l[&6&l⌛&d&l] &aGMLock activé" to player
+            else:
+               delete {gmlock.%uuid of player%}
+               send "&d&l[&6&l⌛&d&l] &cGMLock désactivé" to player
+            stop
+         if arg-1 is not "on":
+            if arg-1 is not "off":
+               send "&d&l[&6&l⌛&d&l] &cArgument invalide : on/off" to player
+               stop
+         if arg-1 is "on":
+            set {gmlock.%uuid of player%} to true
+            send "&d&l[&6&l⌛&d&l] &aGMLock activé" to player
+         else:
+            delete {gmlock.%uuid of player%}
+            send "&d&l[&6&l⌛&d&l] &cGMLock désactivé" to player
+      else:
+         send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+
+command /gmlocklist:
+   trigger:
+      if player is op:
+         send "&d&l[&6&l⌛&d&l] &fListe des joueurs ayant le GMlock d'activé:" to player
+         loop all offlineplayers:
+            if {gmlock.%uuid of loop-offlineplayer%} is true:
+               send "- &e%loop-value%" to player
+      else:
+         send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+
+command /gmlockdelall:
+   trigger:
+      if player is op:
+         # send "&d&l[&6&l⌛&d&l] &cGMLock reset" to player
+         send "&d&l[&6&l⌛&d&l] &cCommande désactivée" to player
+      else:
+         send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+#===================================================
+on player world change:
+   if player is op:
+      if {gmlock.%uuid of player%} is true:
+         wait 0.2 seconds
+         set gamemode of player to creative
+
+on connect:
+   if player is op:
+      if {gmlock.%uuid of player%} is true:
+         wait 0.2 seconds
+         set gamemode of player to creative
+#===================================================

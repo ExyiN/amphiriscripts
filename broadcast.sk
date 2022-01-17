@@ -1,0 +1,42 @@
+# [Amphiris broadcasts]
+#===================================================
+options:
+    pmsg: &d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande.
+#===================================================
+function bdsep():
+    broadcast "&e------------------&d&l[&6&l⌛&d&l]&e-------------------"
+
+function bdvote():
+    bdsep()
+    broadcast "<##FFE05D>&lVotez pour notre serveur et recevez des récompenses !"
+    broadcast "<##FFE05D>&lFaites <##FF1E5D>&l/vote <##FFE05D>&lou allez sur notre <##FF1E5D>&lsite <##FFE05D>&lpour voter."
+    broadcast "<##FFE05D>&lMerci beaucoup !"
+    bdsep()
+
+function bddiscord():
+    bdsep()
+    broadcast "&e&lRejoignez nous sur <##6861E4>&lDiscord !"
+    broadcast "&e&lFaites <##6861E4>&l/discord &e&lpour accéder au lien !"
+    bdsep()
+
+function bdhelp(p: player):
+    send "&d&l[&6&l⌛&d&l] Broadcast dispo :" to {_p}
+    send "&7- vote" to {_p}
+    send "&7- discord" to {_p}
+#===================================================
+every 3 hours:
+    bdvote()
+
+every 2 hours:
+    bddiscord()
+#===================================================
+command /bd [<text>]:
+    permission: bd.use
+    permission message: {@pmsg}
+    trigger:
+        if arg-1 is "vote":
+            bdvote()
+        else if arg-1 is "discord":
+            bddiscord()
+        else:
+            bdhelp(player)

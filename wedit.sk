@@ -1,0 +1,16 @@
+command /selitem:
+    trigger:
+        if player is op:
+            give player 1 of glowing flint named "&6&lOutil de sélection"
+        else:
+            send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+
+on left click:
+    if player's tool is flint named "&6&lOutil de sélection":
+        cancel event
+        make player execute command "//pos1"
+
+on right click:
+    if player's tool is flint named "&6&lOutil de sélection":
+        cancel event
+        make player execute command "//pos2"

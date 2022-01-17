@@ -1,0 +1,64 @@
+options:
+    pmsg: &d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande.
+
+function addListeNCL(p: player):
+    if {listNCL::*} contains name of {_p}'s tool:
+        send "&cItem déjà dans la liste" to {_p}
+    else:
+        add name of {_p}'s tool to {listNCL::*}
+        send "%name of {_p}'s tool% &aajouté dans la liste" to {_p}
+
+function remListeNCL(p: player):
+    if {listNCL::*} doesn't contain name of {_p}'s tool:
+        send "&cItem pas dans la liste" to {_p}
+    else:
+        remove name of {_p}'s tool from {listNCL::*}
+        send "%name of {_p}'s tool% &cretiré de la liste" to {_p}
+
+function showListeNCL(p: player):
+    send "&d&l[&6&l⌛&d&l] &fListe des items NCL :" to {_p}
+    loop {listNCL::*}:
+        send "- %loop-value%" to {_p}
+
+function helpListeNCL(p: player):
+    send "&d&l[&6&l⌛&d&l] &eManuel du système d'item NC :" to {_p}
+    send "&e- /noclick add &7- Ajoute l'item en main dans la liste des items NCL" to {_p}
+    send "&e- /noclick rem &7- Retire l'item en main de la liste des items NCL" to {_p}
+    send "&e- /noclick list &7- Affiche la liste des items NCL" to {_p}
+    send "&e- /noclick help &7- Affiche ce manuel d'instruction" to {_p}
+    send "&e- /noclick reload &7- Reload le script" to {_p}
+
+on right click:
+    if {listNCL::*} contains name of event-item:
+        cancel event
+    else if {listNCL::*} contains name of offhand tool:
+        cancel event
+
+command /noclick [<text>]:
+    permission: noclick.use
+    permission message: {@pmsg}
+    trigger:
+        if arg-1 is not set:
+            helpListeNCL(player)
+            stop
+        if arg-1 is not "add":
+            if arg-1 is not "rem":
+                if arg-1 is not "list":
+                    if arg-1 is not "help":
+                        if arg-1 is not "reload":
+                            helpListeNCL(player)
+                            stop
+        if arg-1 is "add":
+            addListeNCL(player)
+            stop
+        if arg-1 is "rem":
+            remListeNCL(player)
+            stop
+        if arg-1 is "list":
+            showListeNCL(player)
+            stop
+        if arg-1 is "help":
+            helpListeNCL(player)
+            stop
+        if arg-1 is "reload":
+            make player execute command "/sk reload noclick"

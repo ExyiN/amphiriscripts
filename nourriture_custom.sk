@@ -1,0 +1,4 @@
+on consume:
+    if name of event-item is "&dChair de démon":
+        make console execute command "/tag %player% add speedpig"
+        make console execute command "/warp Enfers %player%"

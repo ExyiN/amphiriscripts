@@ -1,0 +1,61 @@
+# [Amphiris objets cliquables]
+#===================================================
+on right click:
+   if name of event-item is "&5Recueil de sorts":
+      cancel event
+      make player execute command "/cp panel-83"
+   else if name of event-item is "&4Recueil de sorts impardonnables":
+      cancel event
+      make player execute command "/cp sorts-imp"
+   else if name of event-item is "&6&lLivre de quêtes":
+      cancel event
+      make player execute command "/quests"
+   else if name of event-item is "&2&lRegistre des Cultes":
+      cancel event
+      make player execute command "/cp panel-25"
+   else if name of event-item is "&5&l⌛ &d&l&nAxe du destin&r &5&l⌛":
+      make player execute command "/cp panel-85"
+   else if name of event-item is "&4&lFormule des damnés":
+      cancel event
+      make player execute command "/cp panel-47"
+   else if name of event-item is "&5Cube des damnés":
+      make player execute command "/cp panel-14"
+   else if name of event-item is "&4&lPotion magique rouge":
+      cancel event
+      if name of player's tool is "&4&lPotion magique rouge":
+         make console execute command "/execute as %player% at @s run function namespace:popo1"
+         play sound "entity.wandering_trader.drink_potion" to player
+   else if name of event-item is "&2&lPotion magique verte":
+      cancel event
+      if name of player's tool is "&2&lPotion magique verte":
+         make console execute command "/execute as %player% at @s run function namespace:popo2"
+         play sound "entity.wandering_trader.drink_potion" to player
+   else if name of event-item is "&9&lPotion magique bleue":
+      cancel event
+      if name of player's tool is "&9&lPotion magique bleue":
+         make console execute command "/execute as %player% at @s run function namespace:popo3"
+         play sound "entity.wandering_trader.drink_potion" to player
+   else if name of offhand tool is "&c&l⚫ &4&l🔥 &6&l&nSceptre du Roi du Feu&r &4&l🔥 &c&l⚫":
+      cancel event
+      make console execute command "/execute as %player% at @s[scores={magie=255..}] unless entity @e[distance=..250,tag=anihi] run function namespace:brasierpourd"
+   else if name of offhand tool is "&b&l⚫ &5&l❂ &d&l&nSceptre cristallin ancestral&r &5&l❂ &b&l⚫":
+      cancel event
+      make console execute command "/execute as %player% at @s[scores={magie=600..}] unless entity @e[distance=..250,tag=anihi] run function namespace:solidedia"
+   else if name of offhand tool is "&d&l⚫ &4&l⸸ &5&l&nSceptre de l’Étoile du Matin&r &4&l⸸ &d&l⚫":
+      cancel event
+      make console execute command "/execute as %player% at @s run function namespace:samael"
+#===================================================
+on place:
+   if name of player's tool is "&5&l⌛ &d&l&nAxe du destin&r &5&l⌛":
+      cancel event
+      stop
+   if name of offhand tool is "&5&l⌛ &d&l&nAxe du destin&r &5&l⌛":
+      cancel event
+      stop
+   if name of player's tool is "&5Cube des damnés":
+      cancel event
+      stop
+   if name of offhand tool is "&5Cube des damnés":
+      cancel event
+      stop
+#===================================================

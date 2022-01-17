@@ -1,0 +1,12 @@
+# [Amphiris Join-Leave]
+#===================================================
+on first join:
+	broadcast "&d&l[&6&l⌛&d&l] &6&lBienvenue &3&l%player% &6&lsur Amphiris !"
+	send "&6&lNous sommes aussi sur discord ! Le lien est là -> <link:https://discord.gg/brms2HYU8D><##6861E4>&lDiscord<reset>" to player
+#======
+on join:
+	set join message to "[&a+&r] &e&l%player%"
+#======
+on quit:
+	set quit message to "[&4-&r] &e&l%player%"
+#===================================================

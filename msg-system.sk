@@ -1,0 +1,123 @@
+# [Amphiris message system]
+#===================================================
+on join:
+	if {msgnotif.%player%} is not set:
+		set {msgnotif.%player%} to true
+	if {msgreception.%player%} is not set:
+		set {msgreception.%player%} to true
+	if {afk.%player%} is not set:
+		set {afk.%player%} to false
+
+on Skript start:
+   make console execute command "/sk reload msg-system"
+#===================================================
+command /afk:
+   trigger:
+      if {afk.%player%} is not set:
+         set {afk.%player%} to true
+         set {afk.%player%::1} to location of block below player
+         broadcast "&e%player% &7est désormais AFK."
+      if {afk.%player%} is false:
+         set {afk.%player%} to true
+         set {afk.%player%::1} to location of block below player
+         broadcast "&e%player% &7est désormais AFK."
+      else:
+         set {afk.%player%} to false
+         delete {afk.%player%::1}
+         set {afktimer.%player%} to 0
+         broadcast "&e%player% &7n'est plus AFK."
+#===================================================
+on any move:
+   if {afk.%player%} is true:
+      if location of block below player is not {afk.%player%::1}:
+         make player execute command "/afk"
+   else:
+      set {afktimer.%player%} to 0
+#======
+every 10 seconds in "azerty":
+   loop all players:
+      if loop-player is not op:
+         if {afktimer.%loop-player%} is not set:
+            set {afktimer.%loop-player%} to 0
+         add 10 to {afktimer.%loop-player%}
+         if {afk.%loop-player%} is false:
+            if {afktimer.%loop-player%} is equal to 300:
+               make loop-player execute command "/afk"
+         else:
+            if {afktimer.%loop-player%} is equal to 900:
+               make console execute command "/kick %loop-player% Vous avez été AFK pour plus de 15 min"
+#======
+command /getTimer <player>:
+   trigger:
+      if player is op:
+         send "Timer %arg-1%: %{afktimer.%arg-1%}%" to player
+      else:
+         send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+#===================================================
+command /w <offlineplayer> <text>:
+   aliases: msg,pm,mp,tell,m,whisper
+   trigger:
+      if arg-1 is online:
+         if {msgreception.%arg-1%} is true:
+            set {lastmsg.%arg-1%} to player
+            set {lastmsg.%player%} to arg-1
+            send "&6[ &e&l%player% &6-> &cmoi &6] : &f%arg-2%" to arg-1
+            send "&6[ &cmoi &6-> &e&l%arg-1%&6 ] : &f%arg-2%" to player
+            if {msgnotif.%arg-1%} is true:
+               play sound "block.note_block.hat" to arg-1
+            if {afk.%arg-1%} is true:
+               send "&e%arg-1% &7est actuellement AFK" to player
+         else:
+            send "&e%arg-1% &7a désactivé la réception des messages" to player
+      else:
+         send "&cCe joueur n'est pas connecté" to player
+#======
+command /r <text>:
+   aliases: reply
+   trigger:
+      make player execute command "/w %{lastmsg.%player%}% %arg-1%"
+#======
+command /mptoggle:
+   aliases: msgtoggle
+   trigger:
+      if {msgreception.%player%} is false:
+         set {msgreception.%player%} to true
+         send "&aRéception des messages activée" to player
+      else:
+         set {msgreception.%player%} to false
+         send "&cRéception des messages désactivée" to player
+#======
+command /mpnotiftoggle:
+   aliases: msgnotiftoggle
+   trigger:
+      if {msgnotif.%player%} is false:
+         set {msgnotif.%player%} to true
+         send "&aNotifications des messages activées" to player
+      else:
+         set {msgnotif.%player%} to false
+         send "&cNotifications des messages désactivées" to player
+#======
+command /mention <offlineplayer> [<text>]:
+	aliases: @
+	cooldown: 10 seconds
+	cooldown message: &cVeuillez attendre %remaining time% avant de réutiliser la commande
+	cooldown bypass: op
+	trigger:
+		if arg-1 is "all":
+			if player is op:
+				if arg-2 is not set:
+					make player say "&a&l@%arg-1%"
+				else:
+					make player say "%arg-2% &a&l@%arg-1%"
+				play sound "block.note_block.bell" to all players
+			else:
+				send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+		else if arg-1 is online:
+			if arg-2 is not set:
+				make player say "&a&l@%arg-1%"
+			else:
+				make player say "%arg-2% &a&l@%arg-1%"
+			play sound "block.note_block.bell" to arg-1
+		else:
+			send "&cCe joueur n'est pas connecté" to player
+#======

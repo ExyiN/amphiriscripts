@@ -1,0 +1,199 @@
+# [Amphiris elevators]
+#=================================================== Functions
+function teleportAsc(tpP: player, tpLoc: location):
+    play sound "entity.enderman.teleport" with volume 1 at location of {_tpP}
+    teleport {_tpP} to {_tpLoc}
+    play sound "entity.enderman.teleport" with volume 1 at location of {_tpP}
+
+function teleportCheck(tpP: player,sensTp: text):
+    set {_posJ} to location of {_tpP}
+    loop {asc::*}:
+        if distance between location of {_tpP} and loop-value is less than {ascRayon::%loop-index%}:
+            if {ascSens::%loop-index%} is "up":
+                if {_sensTp} is "up":
+                    add {ascHaut::%loop-index%} to y-loc of {_posJ}
+                    teleportAsc({_tpP},{_posJ})
+                    exit loop
+            else if {ascSens::%loop-index%} is "down":
+                if {_sensTp} is "down":
+                    remove {ascHaut::%loop-index%} from y-loc of {_posJ}
+                    teleportAsc({_tpP},{_posJ})
+                    exit loop
+#===================================================
+command /asc [<text>] [<text>] [<text>] [<number>] [<number>]:
+    trigger:
+        if player is not op:
+            send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+        else:
+            #====== Stop conditions
+            if arg-1 is not set:
+                make player execute command "/asc help"
+                stop
+            if arg-1 is not "set":
+                if arg-1 is not "del":
+                    if arg-1 is not "list":
+                        if arg-1 is not "info":
+                            if arg-1 is not "help":
+                                if arg-1 is not "reset":
+                                    if arg-1 is not "reload":
+                                        make player execute command "/asc help"
+                                        stop
+            if arg-2 is not set:
+                if arg-1 is "set":
+                    make player execute command "/asc help"
+                    stop
+                if arg-1 is "del":
+                    make player execute command "/asc help"
+                    stop
+            if arg-3 is not set:
+                if arg-1 is "set":
+                    make player execute command "/asc help"
+                    stop
+            if arg-4 is not set:
+                if arg-1 is "set":
+                    make player execute command "/asc help"
+                    stop
+            if arg-5 is not set:
+                if arg-1 is "set":
+                    make player execute command "/asc help"
+                    stop
+            #======
+            if arg-1 is "help":
+                send "&d&l[&6&l⌛&d&l] &eManuel du système d'ascenseurs:" to player
+                send "&e- /asc set <nom> <up/down> <rayon> <hauteur> &7- Ajoute un ascenseur à l'endroit où vous vous trouvez" to player
+                send "&e- /asc del <up/down> &7| &e/asc del <nom> &7- Retire l'ascenseur où vous vous trouvez ou celui indiqué" to player
+                send "&e- /asc list &7- Affiche la liste des ascenseurs" to player
+                send "&e- /asc info &7- Affiche la liste des ascenseurs dans un rayon de 100 blocs" to player
+                send "&e- /asc reset &7- &cSupprime tous les ascenseurs" to player
+                send "&e- /asc help &7- Affiche ce manuel d'instructions" to player
+                send "&e- /asc reload &7- Reload le skript" to player
+                stop
+            #======
+            if arg-1 is "set":
+                #====== Stop conditions
+                if {ascNom::*} contains arg-2:
+                    send "&cCe nom est déjà utilisé" to player
+                    stop
+                if arg-2 is "up":
+                    send "&cNom d'ascenseur interdit" to player
+                    stop
+                if arg-2 is "down":
+                    send "&cNom d'ascenseur interdit" to player
+                    stop
+                if arg-3 is not "up":
+                    if arg-3 is not "down":
+                        make player execute command "/asc help"
+                        stop
+                #======
+                if {nbAsc} is not set:
+                    set {nbAsc} to 0
+                add 1 to {nbAsc}
+                add location of player to {asc::*}
+                add arg-2 to {ascNom::*}
+                add arg-3 to {ascSens::*}
+                add arg-4 to {ascRayon::*}
+                add arg-5 to {ascHaut::*}
+                send "&aAscenseur &6%arg-2% &ade rayon &6%arg-4% &aet de hauteur &6%arg-5% &ainstallé" to player
+                stop
+            #======
+            if arg-1 is "del":
+                #====== Stop conditions
+                if {nbAsc} is not set:
+                    send "&cAucun ascenseur installé !" to player
+                    stop
+                if arg-2 is not "up":
+                    if arg-2 is not "down":
+                        if {ascNom::*} doesn't contain arg-2:
+                            send "&cAucun ascenseur de ce nom installé !" to player
+                            stop
+                #======
+                loop {asc::*}:
+                    if arg-2 is {ascNom::%loop-index%}:
+                        set {_index} to loop-index
+                        exit loop
+                    if distance between location of player and loop-value is less than {ascRayon::%loop-index%}:
+                        if arg-2 is "up":
+                            if {ascSens::%loop-index%} is "up":
+                                set {_index} to loop-index
+                                exit loop
+                        else if arg-2 is "down":
+                            if {ascSens::%loop-index%} is "down":
+                                set {_index} to loop-index
+                                exit loop
+                #======
+                if {_index} is set:
+                    delete {ascHaut::%{_index}%}
+                    delete {ascRayon::%{_index}%}
+                    delete {ascSens::%{_index}%}
+                    remove {ascNom::%{_index}%} from {ascNom::*}
+                    remove {asc::%{_index}%} from {asc::*}
+                    remove 1 from {nbAsc}
+                    if {nbAsc} is equal to 0:
+                        delete {nbAsc}
+                    send "&aAscenseur supprimé !" to player
+                    stop
+                #======
+                send "&cAucun ascenseur trouvé à votre emplacement" to player
+                stop
+            #======
+            if arg-1 is "list":
+                send "&d&l[&6&l⌛&d&l] &fListe des ascenseurs :" to player
+                if {nbAsc} is not set:
+                    send "&eTotal : &60 &eascenseur" to player
+                else if {nbAsc} is equal to 1:
+                    send "&eTotal : &6%{nbAsc}% &eascenseur" to player
+                else:
+                    send "&eTotal : &6%{nbAsc}% &eascenseurs" to player
+                loop {asc::*}:
+                    send "&7%loop-index% - &a%{ascNom::%loop-index%}% : &6%loop-value% &7/ &eSens : %{ascSens::%loop-index%}% &7/ &eR = %{ascRayon::%loop-index%}% &7/ &eH = %{ascHaut::%loop-index%}%" to player
+                stop
+            #======
+            if arg-1 is "info":
+                set {_infoR} to 100
+                set {_nbAscAutour} to 0
+                #======
+                loop {asc::*}:
+                    if distance between location of player and loop-value is less than {_infoR}:
+                        add 1 to {_nbAscAutour}
+                #======
+                if {_nbAscAutour} is equal to 0:
+                    send "&cAucun ascenseur aux alentours de &6%{_infoR}% &cblocs"
+                    stop
+                #======
+                send "&d&l[&6&l⌛&d&l] &fIl y a &6%{_nbAscAutour}% &rascenseurs dans un rayon de &a%{_infoR}% &rblocs :"
+                loop {asc::*}:
+                    if distance between location of player and loop-value is less than {_infoR}:
+                        send "&7- &a%{ascNom::%loop-index%}% : &6%loop-value% &7/ &eSens : %{ascSens::%loop-index%}% &7/ &eR = %{ascRayon::%loop-index%}% &7/ &eH = %{ascHaut::%loop-index%}%" to player
+                #======
+                stop
+            #======
+            if arg-1 is "reset":
+                send "&d&l[&6&l⌛&d&l] &cCommande désactivée" to player
+                stop
+                # loop {asc::*}:
+                #     delete {ascHaut::%loop-index%}
+                #     delete {ascRayon::%loop-index%}
+                #     delete {ascSens::%loop-index%}
+                #     remove {ascNom::%loop-index%} from {ascNom::*}
+                #     remove {asc::%loop-index%} from {asc::*}
+                # delete {asc::*}
+                # delete {ascSens::*}
+                # delete {ascRayon::*}
+                # delete {ascHaut::*}
+                # delete {ascNom::*}
+                # delete {nbAsc}
+                # send "&cReset effectué" to player
+                # stop
+            #======
+            if arg-1 is "reload":
+                make player execute command "/sk reload ascenseurs"
+                stop
+#===================================================
+on jump:
+    teleportCheck(player,"up")
+#===================================================
+on sneak toggle:
+    if player is sneaking:
+        teleportCheck(player,"down")
+#===================================================
+            

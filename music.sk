@@ -1,0 +1,4 @@
+#=================================================== Functions
+function playSoundNoteBlock(instruN: text, noteM: number, volumeN: number, psP: player):
+    set {_pitchLevel} to 2^(({_noteM}-12)/12)
+    play sound "block.note_block.%{_instruN}%" with volume {_volumeN} and pitch {_pitchLevel} at location of {_psP}

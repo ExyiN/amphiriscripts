@@ -1,0 +1,187 @@
+# [Amphiris staff switch system]
+#===================================================
+options:
+    pmsg: &d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande.
+    barresup: &8-------------&3[Staff - Amphiris]&8------------
+    barreinf: &8----------------------------------------
+    prefix: &d&l[&6&l⌛&d&l]
+#=================================================== Functions
+function staffAddHelp(p: player):
+    send "{@barresup}" to {_p}
+    send "&6/staffadd <joueur> <grade> <rangScoreboard> &7- Ajoute le joueur dans la liste du staff avec le grade et rang donné" to {_p}
+    send "{@barreinf}" to {_p}
+#======
+function staffSwitchJoueurHelp(p: player):
+    send "{@barresup}" to {_p}
+    send "&eUtilisation &7: &e/joueur <grade> <eglise>" to {_p}
+    send "{@prefix} &fListe des grades et églises :" to {_p}
+    send "&7• default - Inconnu(e)" to {_p}
+    send "&7• &acitoyen &7- &aCitoyen" to {_p}
+    send "&7• &acitoyenne &7- &aCitoyenne" to {_p}
+    send "&7• &2chevaliern &7- &2Chevalier" to {_p}
+    send "&7• &ebaron &7- &eBaron" to {_p}
+    send "&7• &ebaronne &7- &eBaronne" to {_p}
+    send "&7• &6vicomte &7- &6Vicomte" to {_p}
+    send "&7• &6vicomtesse &7- &6Vicomtesse" to {_p}
+    send "&7• &dcomte &7- &dComte" to {_p}
+    send "&7• &dcomtesse &7- &dComtesse" to {_p}
+    send "&7• &cmarquis &7- &cMarquis" to {_p}
+    send "&7• &cmarquise &7- &cMarquise" to {_p}
+    send "&7• &4duc &7- &4Duc" to {_p}
+    send "&7• &4duchesse &7- &4Duchesse" to {_p}
+    send "&7---------------------------" to {_p}
+    send "&7• &4arb &7- &4Libre-Arbitre" to {_p}
+    send "&7• &clib &7- &cLiberté" to {_p}
+    send "&7• &eterre &7- &eEnfants de la terre" to {_p}
+    send "&7• &ehecate &7- &eHécate" to {_p}
+    send "&7• &8murm &7- &8Murmures" to {_p}
+    send "&7• &1caly &7- &1Calypso" to {_p}
+    send "&7• &dgeass &7- &dGeass" to {_p}
+    send "&7• exo - Exorcistes" to {_p}
+    send "{@barreinf}" to {_p}
+#=================================================== Commands
+command /staffadd [<offlineplayer>] [<text>] [<number>]:
+    permission: amph.staff.admin
+    permission message: {@pmsg}
+    trigger:
+        #====== Stop conditions
+        if arg-1 is not set:
+            staffAddHelp(player)
+            stop
+        if arg-2 is not set:
+            staffAddHelp(player)
+            stop
+        if arg-3 is not set:
+            staffAddHelp(player)
+            stop
+        #======
+        if {staff::*} doesn't contain arg-1:
+            add arg-1 to {staff::*}
+        set {staffRole.%uuid of arg-1%} to arg-2
+        set {staffScoreboardRank.%uuid of arg-1%} to arg-3
+        make console execute command "/lp user %arg-1% permission set amph.staff.switch true"
+        send "{@prefix} &a%arg-1% ajouté au staff en tant que %arg-2%" to player
+#======
+command /staff:
+    permission: amph.staff.switch
+    permission message: {@pmsg}
+    trigger:
+        make console execute command "/lp user %player% parent set %{staffRole.%uuid of player%}%"
+        make console execute command "/lp user %player% parent add ods"
+        make console execute command "/scoreboard players set %player% grades %{staffScoreboardRank.%uuid of player%}%"
+        make console execute command "/op %player%"
+        make player execute command "/gmlock on"
+        wait 0.2 seconds
+        set gamemode of player to creative
+        send "{@prefix} &aPassage en mode staff effectué" to player
+#======
+command /stafflist:
+    trigger:
+        send "{@barresup}" to player
+        #====== Empereur
+        send "&6&l⌛ &9&lEmpereur &6&l⌛" to player
+        send "{@barreinf}" to player
+        loop {staff::*}:
+            if {staffRole.%uuid of loop-value%} is "empereur":
+                send "&9&l%loop-value%" to player
+                exit loop
+        #====== Princes et Princesses
+        send "{@barreinf}" to player
+        send "&6&l⌛ &3&lPrinces &8/ &3&lPrincesses &6&l⌛" to player
+        send "{@barreinf}" to player
+        loop {staff::*}:
+            if {staffScoreboardRank.%uuid of loop-value%} is 2:
+                if loop-value is "Blypie":
+                    send "&e&l%loop-value%" to player
+                else:
+                    send "&3&l%loop-value%" to player
+        #====== Chanceliers
+        send "{@barreinf}" to player
+        send "&6&l⌛ &b&lChanceliers &8/ &b&lChancelières &6&l⌛" to player
+        send "{@barreinf}" to player
+        loop {staff::*}:
+            if {staffScoreboardRank.%uuid of loop-value%} is 3:
+                send "&b&l%loop-value% &7: %{staffRole.%uuid of loop-value%}%" to player
+        send "{@barreinf}" to player
+
+#======
+command /joueur [<text>] [<text>]:
+    permission: amph.staff.switch
+    permission message: {@pmsg}
+    trigger:
+        #====== Grades
+        add "default" to {_grades::*}
+        add "citoyen" to {_grades::*}
+        add "citoyenne" to {_grades::*}
+        add "chevaliern" to {_grades::*}
+        add "baron" to {_grades::*}
+        add "baronne" to {_grades::*}
+        add "vicomte" to {_grades::*}
+        add "vicomtesse" to {_grades::*}
+        add "comte" to {_grades::*}
+        add "comtesse" to {_grades::*}
+        add "marquis" to {_grades::*}
+        add "marquise" to {_grades::*}
+        add "duc" to {_grades::*}
+        add "duchesse" to {_grades::*}
+        #====== Églises
+        add "arb" to {_eglises::*}
+        add "lib" to {_eglises::*}
+        add "terre" to {_eglises::*}
+        add "hecate" to {_eglises::*}
+        add "murm" to {_eglises::*}
+        add "caly" to {_eglises::*}
+        add "geass" to {_eglises::*}
+        add "exo" to {_eglises::*}
+        #====== Stop conditions
+        if arg-1 is not set:
+            staffSwitchJoueurHelp(player)
+            stop
+        if {_grades::*} doesn't contain arg-1:
+            send "{@prefix} &cGrade non existant" to player
+            stop
+        if arg-2 is set:
+            if {_eglises::*} doesn't contain arg-2:
+                send "{@prefix} &cÉglise non existante" to player
+                stop
+        #====== Grade gives
+        make console execute command "/lp user %player% parent set %arg-1%"
+        if arg-2 is set:
+            make console execute command "/lp user %player% parent add %arg-2%"
+        #====== Grade rank in scoreboard
+        if arg-1 is "citoyen":
+            set {_scoreGrade.%player%} to 11
+        else if arg-1 is "citoyenne":
+            set {_scoreGrade.%player%} to 11
+        else if arg-1 is "chevaliern":
+            set {_scoreGrade.%player%} to 10
+        else if arg-1 is "baron":
+            set {_scoreGrade.%player%} to 9
+        else if arg-1 is "baronne":
+            set {_scoreGrade.%player%} to 9
+        else if arg-1 is "vicomte":
+            set {_scoreGrade.%player%} to 8
+        else if arg-1 is "vicomtesse":
+            set {_scoreGrade.%player%} to 8
+        else if arg-1 is "comte":
+            set {_scoreGrade.%player%} to 7
+        else if arg-1 is "comtesse":
+            set {_scoreGrade.%player%} to 7
+        else if arg-1 is "marquis":
+            set {_scoreGrade.%player%} to 6
+        else if arg-1 is "marquise":
+            set {_scoreGrade.%player%} to 6
+        else if arg-1 is "duc":
+            set {_scoreGrade.%player%} to 5
+        else if arg-1 is "duchesse":
+            set {_scoreGrade.%player%} to 5
+        #======
+        set gamemode of player to survival
+        wait 0.2 seconds
+        make console execute command "/scoreboard players set %player% grades %{_scoreGrade.%player%}%"
+        make player execute command "/gmlock off"
+        make console execute command "/heal %player%"
+        make console execute command "/deop %player%"
+        send "{@prefix} &aPassage en %arg-1% effectué" to player
+        if arg-2 is set:
+            send "{@prefix} &5Église: %arg-2%" to player

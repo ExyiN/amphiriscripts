@@ -1,0 +1,22 @@
+options:
+    pmsg: &d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande.
+
+on right click:
+    if name of player's tool is name of {sucreDorgePioche}:
+        if {SOPiocheSat.%uuid of player%} is not set:
+            make console execute command "/feed %player%"
+            send "&6Miam ! Un bon sucre d'orge !" to player
+            if player is not op:
+                set {SOPiocheSat.%uuid of player%} to 45
+                while {SOPiocheSat.%uuid of player%} is greater than 0:
+                    remove 1 from {SOPiocheSat.%uuid of player%}
+                    wait 1 second
+                delete {SOPiocheSat.%uuid of player%}
+        else:
+            send "&eCooldown Saturation : %{SOPiocheSat.%uuid of player%}%s" to player
+
+command /setsucredorgepioche:
+    permission: op
+    permission message: {@pmsg}
+    trigger:
+        set {sucreDorgePioche} to player's tool

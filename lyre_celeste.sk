@@ -1,0 +1,281 @@
+# [Amphiris Lyre Céleste]
+#=================================================== Options
+options:
+    nbMusic: 7
+    volumeMusic: 2
+#=================================================== Functions
+function lyreCharging(chargingPlayer: player):
+    if {lyreCelesteCharge.%uuid of {_chargingPlayer}%} is not set:
+        set {lyreCelesteCharge.%uuid of {_chargingPlayer}%} to 0
+    set {lyreCelesteLoop.%uuid of {_chargingPlayer}%} to true
+    #======
+    while {lyreCelesteLoop.%uuid of {_chargingPlayer}%} is true:
+        if {lyreCelesteCharge.%uuid of {_chargingPlayer}%} is less than 100:
+            add 2 to {lyreCelesteCharge.%uuid of {_chargingPlayer}%}
+            if {lyreCelesteCharge.%uuid of {_chargingPlayer}%} is greater than or equal to 50:
+                send action bar "<##A0FFD5>&l%{lyreCelesteCharge.%uuid of {_chargingPlayer}%}%%%" to {_chargingPlayer}
+            else:
+                send action bar "<##F4EDB5>&l%{lyreCelesteCharge.%uuid of {_chargingPlayer}%}%%%" to {_chargingPlayer}
+            if {lyreCelesteCharge.%uuid of {_chargingPlayer}%} is equal to 30:
+                play sound "block.bell.resonate" with volume 1 at location of {_chargingPlayer}
+            if {lyreCelesteCharge.%uuid of {_chargingPlayer}%} is equal to 100:
+                set {lyreCelesteLoop.%uuid of {_chargingPlayer}%} to false
+                exit loop
+        wait 0.05 seconds
+#======
+function lyreDecharging(dechargingPlayer: player):
+    if {lyreCelesteCharge.%uuid of {_dechargingPlayer}%} is less than 50:
+        set {lyreCelesteCharge.%uuid of {_dechargingPlayer}%} to 0
+    if {lyreCelesteLoop.%uuid of {_dechargingPlayer}%} is set:
+        set {lyreCelesteLoop.%uuid of {_dechargingPlayer}%} to false
+#======
+function resetLyreInfos(resetP: offlineplayer):
+    if {lyreCelesteCharge.%uuid of {_resetP}%} is set:
+        delete {lyreCelesteCharge.%uuid of {_resetP}%}
+    if {lyreCelesteLoop.%uuid of {_resetP}%} is set:
+        delete {lyreCelesteLoop.%uuid of {_resetP}%}
+    if {lyreCelesteMelodieRC.%uuid of {_resetP}%} is set:
+        delete {lyreCelesteMelodieRC.%uuid of {_resetP}%}
+    if {lyreCelesteMelodieChoix.%uuid of {_resetP}%} is set:
+        delete {lyreCelesteMelodieChoix.%uuid of {_resetP}%}
+#======
+function lyreMusic(musicNum: number, musP: player):
+    {_musicNum} is 1:
+        playSoundNoteBlock("harp",15,{@volumeMusic},{_musP})
+        wait 0.5 seconds
+        playSoundNoteBlock("harp",19,{@volumeMusic},{_musP})
+        wait 0.1 seconds
+        playSoundNoteBlock("harp",20,{@volumeMusic},{_musP})
+        wait 1 second
+        playSoundNoteBlock("harp",19,{@volumeMusic},{_musP})
+    {_musicNum} is 2:
+        playSoundNoteBlock("harp",18,{@volumeMusic},{_musP})
+        wait 0.2 seconds
+        playSoundNoteBlock("harp",20,{@volumeMusic},{_musP})
+        wait 0.2 seconds
+        playSoundNoteBlock("harp",18,{@volumeMusic},{_musP})
+        wait 0.2 seconds
+        playSoundNoteBlock("harp",16,{@volumeMusic},{_musP})
+        wait 0.8 seconds
+        playSoundNoteBlock("harp",15,{@volumeMusic},{_musP})
+    {_musicNum} is 3:
+        playSoundNoteBlock("harp",15,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",17,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",18,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",3,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",5,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",6,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",20,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",18,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",3,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",18,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",17,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",1,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",13,{@volumeMusic},{_musP})
+    {_musicNum} is 4:
+        playSoundNoteBlock("harp",15,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",17,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",18,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",3,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",22,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",17,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",1,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",22,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",15,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",0,{@volumeMusic},{_musP})
+    {_musicNum} is 5:
+        playSoundNoteBlock("harp",13,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",1,{@volumeMusic},{_musP})
+        wait 0.2 seconds
+        playSoundNoteBlock("harp",17,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",5,{@volumeMusic},{_musP})
+        wait 0.2 seconds
+        playSoundNoteBlock("harp",19,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",1,{@volumeMusic},{_musP})
+        wait 0.2 seconds
+        playSoundNoteBlock("harp",20,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",5,{@volumeMusic},{_musP})
+        wait 0.2 seconds
+        playSoundNoteBlock("harp",1,{@volumeMusic},{_musP})
+        wait 0.2 seconds
+        playSoundNoteBlock("harp",19,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",5,{@volumeMusic},{_musP})
+        wait 0.2 seconds
+        playSoundNoteBlock("harp",17,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",1,{@volumeMusic},{_musP})
+        wait 0.2 seconds
+        playSoundNoteBlock("harp",13,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",5,{@volumeMusic},{_musP})
+        wait 0.2 seconds
+        playSoundNoteBlock("harp",12,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",0,{@volumeMusic},{_musP})
+        wait 0.2 seconds
+        playSoundNoteBlock("harp",15,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",5,{@volumeMusic},{_musP})
+        wait 0.2 seconds
+        playSoundNoteBlock("harp",17,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",0,{@volumeMusic},{_musP})
+        wait 0.2 seconds
+        playSoundNoteBlock("harp",14,{@volumeMusic},{_musP})
+        playSoundNoteBlock("harp",2,{@volumeMusic},{_musP})
+    {_musicNum} is 6:  
+        playSoundNoteBlock("harp",17,{@volumeMusic},{_musP})
+        wait 0.05 seconds
+        playSoundNoteBlock("harp",14,{@volumeMusic},{_musP})
+        wait 0.05 seconds
+        playSoundNoteBlock("harp",21,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",19,{@volumeMusic},{_musP})
+        wait 1 seconds
+        playSoundNoteBlock("harp",17,{@volumeMusic},{_musP})
+        wait 0.4 seconds
+        playSoundNoteBlock("harp",19,{@volumeMusic},{_musP})
+    {_musicNum} is 7:
+        playSoundNoteBlock("harp",1,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",1,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",3,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",1,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",6,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",5,{@volumeMusic},{_musP})
+        wait 1.2 seconds
+        playSoundNoteBlock("harp",1,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",1,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",3,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",1,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",8,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",6,{@volumeMusic},{_musP})
+        wait 1.2 seconds
+        playSoundNoteBlock("harp",1,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",1,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",13,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",10,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",6,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",5,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",3,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",11,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",11,{@volumeMusic},{_musP})
+        wait 0.3 seconds
+        playSoundNoteBlock("harp",10,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",6,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",8,{@volumeMusic},{_musP})
+        wait 0.6 seconds
+        playSoundNoteBlock("harp",6,{@volumeMusic},{_musP})
+    set {lyreCelesteMelodieRC.%uuid of {_musP}%} to false
+#=================================================== Events
+on sneak toggle:
+    if player's tool is {lyreCeleste}:
+        if {lyreCelesteCharge.%uuid of player%} is not set:
+            set {lyreCelesteCharge.%uuid of player%} to 0
+        if player is not sneaking:
+            lyreCharging(player)
+        else:
+            lyreDecharging(player)
+#======
+on tool change:
+    if player's tool is {lyreCeleste}:
+        if player is sneaking:
+            lyreCharging(player)
+    else:
+        lyreDecharging(player)
+#======
+on jump:
+    if {lyreCelesteCharge.%uuid of player%} is greater than or equal to 50:
+        wait 0.05 second
+        set {_lyreCelestePushSpeed.%uuid of player%} to {lyreCelesteCharge.%uuid of player%}*1.6/100
+        push the player upwards at speed {_lyreCelestePushSpeed.%uuid of player%}
+        play sound "entity.horse.breathe" with volume 1 and pitch 2 at location of player
+        apply slow falling without particles to player for 3 seconds
+        set {lyreCelesteCharge.%uuid of player%} to 0
+#======
+on right click:
+    if player's tool is {lyreCeleste}:
+        if {lyreCelesteMelodieChoix.%uuid of player%} is not set:
+            set {lyreCelesteMelodieChoix.%uuid of player%} to 1
+        if {lyreCelesteMelodieRC.%uuid of player%} is not set:
+            set {lyreCelesteMelodieRC.%uuid of player%} to false
+        if {lyreCelesteMelodieRC.%uuid of player%} is true:
+            stop
+        set {lyreCelesteMelodieRC.%uuid of player%} to true
+        lyreMusic({lyreCelesteMelodieChoix.%uuid of player%},player)
+#====== 
+on left click:
+    if player's tool is {lyreCeleste}:
+        cancel event
+        if {lyreCelesteMelodieChoix.%uuid of player%} is not set:
+            set {lyreCelesteMelodieChoix.%uuid of player%} to 1
+        if player is sneaking:
+            lyreDecharging(player)
+            if {lyreCelesteMelodieChoix.%uuid of player%} is less than 2:
+                set {lyreCelesteMelodieChoix.%uuid of player%} to {@nbMusic}
+            else:
+                remove 1 from {lyreCelesteMelodieChoix.%uuid of player%}
+        else:
+            if {lyreCelesteMelodieChoix.%uuid of player%} is greater than {@nbMusic}-1:
+                set {lyreCelesteMelodieChoix.%uuid of player%} to 1
+            else:
+                add 1 to {lyreCelesteMelodieChoix.%uuid of player%}
+        send action bar "<##F4EDB5>&lN° musique choisi : %{lyreCelesteMelodieChoix.%uuid of player%}%" to player
+#======     
+on quit:
+    resetLyreInfos(player)
+#=================================================== Commands
+command /resetinfoslyreceleste <offlineplayer>:
+    trigger:
+        if player is op:
+            resetLyreInfos(arg-1)
+        else:
+            send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+#======
+command /getinfoslyreceleste <offlineplayer>:
+    trigger:
+        if player is op:
+            send "<##A0FFD5>Charge %arg-1% : %{lyreCelesteCharge.%uuid of arg-1%}%" to player
+            send "<##A0FFD5>isCharging %arg-1% : %{lyreCelesteLoop.%uuid of arg-1%}%" to player
+            send "<##F4EDB5>isPlayingMusic %arg-1% : %{lyreCelesteMelodieRC.%uuid of arg-1%}%" to player
+            send "<##F4EDB5>N° music %arg-1% : %{lyreCelesteMelodieChoix.%uuid of arg-1%}%" to player
+        else:
+            send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+#======
+command /setLyreCeleste:
+    trigger:
+        if player is op:
+            set {lyreCeleste} to player's tool
+            stop
+        else:
+            send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+#===================================================

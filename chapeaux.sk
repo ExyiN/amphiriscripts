@@ -1,0 +1,99 @@
+# [Amphiris hats system]
+#===================================================
+options:
+    pmsg: &d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande.
+#===================================================
+command /chapeau [<text>]:
+    aliases: chap
+    trigger:
+        if player is not op:
+            send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+        else:
+            #====== Stop conditions
+            if arg-1 is not set:
+                make player execute command "/chapeau help"
+                stop
+            if arg-1 is not "add":
+                if arg-1 is not "del":
+                    if arg-1 is not "list":
+                        if arg-1 is not "help":
+                            if arg-1 is not "reset":
+                                if arg-1 is not "reload":
+                                    make player execute command "/chapeau help"
+                                    stop
+            #======
+            if arg-1 is "help":
+                send "&d&l[&6&l⌛&d&l] &eManuel du système de chapeaux:" to player
+                send "&e- /chapeau add &7- Ajoute l'item en main dans la liste des chapeaux" to player
+                send "&e- /chapeau del &7- Retire le chapeau en main de la liste" to player
+                send "&e- /chapeau list &7- Affiche la liste des chapeaux" to player
+                send "&e- /chapeau reset &7- &cSupprime tous les chapeaux de la liste" to player
+                send "&e- /chapeau help &7- Affiche ce manuel d'instructions" to player
+                send "&e- /chapeau reload &7- Reload le skript" to player
+                stop
+            #======
+            if arg-1 is "add":
+                #====== Stop conditions
+                if player's tool is air:
+                    send "&cPas d'item en main !" to player
+                    stop
+                if {chap::*} contains name of player's tool:
+                    send "&cChapeau déjà ajouté !" to player
+                    stop
+                #====== 
+                add name of player's tool to {chap::*}
+                send "%name of player's tool% &aajouté" to player
+                stop
+            #======
+            if arg-1 is "del":
+                #====== Stop conditions
+                if player's tool is air:
+                    send "&cPas de chapeau en main !" to player
+                    stop
+                if {chap::*} doesn't contain name of player's tool:
+                    send "&cChapeau non existant dans la liste !" to player
+                    stop
+                #======
+                remove name of player's tool from {chap::*}
+                send "%name of player's tool% &csupprimé" to player
+                stop
+            #======
+            if arg-1 is "list":
+                send "&d&l[&6&l⌛&d&l] &fListe des chapeaux :" to player
+                loop {chap::*}:
+                    send "- %loop-value%" to player
+                stop
+            #======
+            if arg-1 is "reset":
+                loop {chap::*}:
+                    remove loop-value from {chap::*}
+                delete {chap::*}
+                send "&cReset effectué" to player
+                stop
+            #======
+            if arg-1 is "reload":
+                make player execute command "/sk reload chapeaux"
+                stop
+#===================================================
+on right click:
+    if {chap::*} contains name of player's tool:
+        if {chapeau_cd.%uuid of player%} is set:
+            send "&cVeuillez patienter &6%{chapeau_cd.%uuid of player%}%&6s &cpour changer de chapeau" to player
+            stop
+        else:
+            set player's tool to helmet of player
+            wait 0.2 seconds
+            set helmet of player to event-item
+            send "&eChapeau équipé !" to player
+            if player is not op:
+                set {chapeau_cd.%uuid of player%} to 4
+                while {chapeau_cd.%uuid of player%} is greater than 0:
+                    wait 1 second
+                    remove 1 from {chapeau_cd.%uuid of player%}
+                delete {chapeau_cd.%uuid of player%}    
+#===================================================
+command /gettimerchap <offlineplayer>:
+    permission: op
+    permission message: {@pmsg}
+    trigger:
+        send "%{chapeau_cd.%uuid of arg-1%}%" to player

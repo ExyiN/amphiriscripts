@@ -1,0 +1,26 @@
+#=================================================== Events
+on damage:
+    if attacker is a player:
+        if name of attacker's tool is "&6♪ &8&lFaux-sse note&r &6♪":
+            set {_rand} to random integer between 1 and 9
+            set {_fauxsseNotePitch} to random integer between 0 and 24
+            {_rand} is 1:
+                set {_fauxsseNoteInstru} to "harp"
+            {_rand} is 2:
+                set {_fauxsseNoteInstru} to "bell"
+            {_rand} is 3:
+                set {_fauxsseNoteInstru} to "flute"
+            {_rand} is 4:
+                set {_fauxsseNoteInstru} to "banjo"
+            {_rand} is 5:
+                set {_fauxsseNoteInstru} to "bit"
+            {_rand} is 6:
+                set {_fauxsseNoteInstru} to "chime"
+            {_rand} is 7:
+                set {_fauxsseNoteInstru} to "guitar"
+            {_rand} is 8:
+                set {_fauxsseNoteInstru} to "iron_xylophone"
+            {_rand} is 9:
+                set {_fauxsseNoteInstru} to "xylophone"
+            playSoundNoteBlock({_fauxsseNoteInstru},{_fauxsseNotePitch},1,attacker)
+            stop

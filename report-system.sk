@@ -1,0 +1,102 @@
+# [Amphiris report system]
+#===================================================
+options:
+   barresup: &8---------&4[Report system - Amphiris]&8---------
+   barreinf: &8----------------------------------------
+   prefix: &8[&cREPORT&8]
+   pmsg: &d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande.
+#===================================================
+function clear(p: player, t: number=1):
+   loop {_t} times:
+      send "" to {_p}
+#======
+function reporthelp(p: player):
+   send "&c/report &e<joueur> <raison> &7- Signale le joueur aux administrateurs" to {_p}
+   if {_p} is op:
+      send "&c/reportlist &7- Affiche tous les joueurs signalés" to {_p}
+      send "&c/reportlist &e<joueur> &7- Affiche tous les signalements pour le joueur donné" to {_p}
+      send "&c/reportdel &e<joueur> &7- Supprime tous les signalements pour le joueur donné" to {_p}
+      send "&c/reportdelall &7- Supprime tous les signalements" to {_p}
+#===================================================
+command /report [<offlineplayer>] [<text>]:
+   trigger:
+      clear(player)
+      send "{@barresup}" to player
+      #======
+      if arg-1 is not set:
+         reporthelp(player)
+      else if arg-2 is not set:
+         send "{@prefix} &cVeuillez indiquer la raison du signalement" to player
+      else:
+         if {report::*} doesn't contain arg-1:
+            add arg-1 to {report::*}
+         if {report::%arg-1%::*} doesn't contain arg-2:
+            add arg-2 to {report::%arg-1%::*}
+         add player to {report::%arg-1%::%arg-2%::*}
+         send "{@prefix} &aVous avez signalé &f%arg-1% &apour &f%arg-2%&a. Votre signalement va être envoyé aux administrateurs" to player
+         send "{@prefix} &3%player% &ba signalé &c%arg-1% &bpour &c%arg 2%" to all players where [input has permission "report.admin"]
+      #======
+      send "{@barreinf}" to player
+#===================================================
+command /reportlist [<offlineplayer>]:
+   permission: report.admin
+   permission message: {@pmsg}
+   trigger:
+      clear(player)
+      send "{@barresup}" to player
+      #======
+      if arg-1 is not set:
+         send "{@prefix} &fListe des joueurs rapportés:" to player
+         loop {report::*}:
+            send "- &c%loop-value%" to player
+      else:
+         if {report::*} doesn't contain arg-1:
+            send "{@prefix} &cAucun signalement pour ce joueur" to player
+         else:
+            send "{@prefix} &fListe des signalements pour &c%arg-1%:" to player
+            loop {report::%arg-1%::*}:
+               loop {report::%arg-1%::%loop-value%::*}:
+                  send "- &c%arg-1% &fa été signalé pour &c%loop-value-1% &fpar &b%loop-value-2%" to player
+      #======
+      send "{@barreinf}" to player
+#===================================================
+command /reportdel [<offlineplayer>]:
+   permission: report.admin
+   permission message: {@pmsg}
+   trigger:
+      clear(player)
+      send "{@barresup}" to player
+      #======
+      if arg-1 is not set:
+         reporthelp(player)
+      else if {report::*} doesn't contain arg-1:
+         send "{@prefix} &cAucun signalement pour ce joueur"
+      else:
+         delete {report::%arg-1%::*}
+         remove arg-1 from {report::*}
+         send "{@prefix} &fSignalement(s) du joueur &c%arg-1% &fsupprimé(s)" to player
+      #======
+      send "{@barreinf}" to player
+#===================================================
+command /reportdelall:
+   permission: report.admin
+   permission message: {@pmsg}
+   trigger:
+      clear(player)
+      send "{@barresup}" to player
+      #======
+      delete {report::*}
+      send "{@prefix} &fListe de signalements supprimée" to player
+      #======
+      send "{@barreinf}" to player
+#===================================================
+on join:
+   if {report::*} contains player:
+      wait 0.5 seconds
+      send "{@prefix} &c%player% &es'est connecté(e), ce joueur est dans la liste des signalements" to all players where [input has permission "report.admin"]
+      send "{@prefix} &eFaites &c/reportlist %player% &epour voir ses signalements" to all players where [input has permission "report.admin"]
+#===================================================
+command /delvar:
+   trigger:
+      if player is op:
+         delete {timer}

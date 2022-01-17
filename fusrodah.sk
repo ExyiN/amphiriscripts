@@ -1,0 +1,13 @@
+on right click:
+    if name of player's tool is "&6&l⚡ &e&lFUS RO DAH &6&l⚡":
+        loop all players:
+            if distance between target block and loop-player is less than 5:
+                if loop-player is not player:
+                    push the loop-player upwards at speed 2
+                    push the loop-player backwards at speed 3
+                    set {_fusrodahBool.%player%} to true
+                    send "&6&lFUS RO DAAAAAH !" to loop-player
+                    play sound "entity.lightning_bolt.impact" to loop-player
+        if {_fusrodahBool.%player%} is true:
+            send "&6&lFUS RO DAAAAAH !" to player
+            play sound "entity.lightning_bolt.impact" to player

@@ -1,0 +1,90 @@
+# [Amphiris pet books]
+#===================================================
+command /livrepet [<text>] [<text>]:
+    aliases: lpet
+    trigger:
+        if player is not op:
+            send "&d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande." to player
+        else:
+            #====== Stop conditions
+            if arg-1 is not set:
+                make player execute command "/livrepet help"
+                stop
+            if arg-1 is not "add":
+                if arg-1 is not "del":
+                    if arg-1 is not "list":
+                        if arg-1 is not "help":
+                            if arg-1 is not "reset":
+                                if arg-1 is not "reload":
+                                    make player execute command "/livrepet help"
+                                    stop
+            if arg-2 is not set:
+                if arg-1 is "add":
+                    make player execute command "/livrepet help"
+                    stop
+            #======
+            if arg-1 is "help":
+                send "&d&l[&6&l⌛&d&l] &eManuel du système de livres d'invocation de familier:" to player
+                send "&e- /livrepet add <nom permission> &7- Ajoute le bouquin en main dans la liste des bouquins des familiers" to player
+                send "&e- /livrepet del &7- Retire le bouquin de pet en main de la liste" to player
+                send "&e- /livrepet list &7- Affiche la liste des livres d'invocation" to player
+                send "&e- /livrepet reset &7- &cSupprime tous les livres d'invocation de la liste" to player
+                send "&e- /livrepet help &7- Affiche ce manuel d'instructions" to player
+                send "&e- /livrepet reload &7- Reload le skript" to player
+                stop
+            #======
+            if arg-1 is "add":
+                #====== Stop conditions
+                if player's tool is air:
+                    send "&cPas de livre en main !" to player
+                    stop
+                if {lpet::*} contains name of player's tool:
+                    send "&cLivre déjà ajouté !" to player
+                    stop
+                #====== 
+                add name of player's tool to {lpet::*}
+                set {lpetNom.%name of player's tool%::1} to arg-2
+                send "%name of player's tool% &aajouté" to player
+                stop
+            #======
+            if arg-1 is "del":
+                #====== Stop conditions
+                if player's tool is air:
+                    send "&cPas de livre en main !" to player
+                    stop
+                if {lpet::*} doesn't contain name of player's tool:
+                    send "&cLivre non existant dans la liste !" to player
+                    stop
+                #======
+                delete {lpetNom.%name of player's tool%::1}
+                remove name of player's tool from {lpet::*}
+                send "%name of player's tool% &csupprimé" to player
+                stop
+            #======
+            if arg-1 is "list":
+                send "&d&l[&6&l⌛&d&l] &fListe des livres d'invocation :" to player
+                loop {lpet::*}:
+                    send "- %loop-value%" to player
+                stop
+            #======
+            if arg-1 is "reset":
+                loop {lpet::*}:
+                    delete {lpetNom.%loop-value%::1}
+                    remove loop-value from {lpet::*}
+                delete {lpet::*}
+                send "&cReset effectué" to player
+                stop
+            #======
+            if arg-1 is "reload":
+                make player execute command "/sk reload bouquins_pets"
+                stop
+#===================================================
+on right click:
+    if {lpet::*} contains name of player's tool:
+        if player has permission "pet.use.%{lpetNom.%name of player's tool%::1}%":
+            send "&cVous avez déjà débloqué ce familier !" to player
+            stop
+        make console execute command "/lp user %player% permission set pet.use.%{lpetNom.%name of player's tool%::1}%"
+        set player's tool to air
+        send "&aVous avez débloqué un nouveau familier - Faites &e/pet &apour voir vos familiers !" to player
+        stop
