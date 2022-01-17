@@ -1,21 +1,22 @@
 #=================================================== Options
 options:
     durabilityMax: 6000
-    noPowerMsg: "<##D94B9B>Le Souffle Vyser n'a plus de pouvoir ! Rechargez le avec de l'essence de magie Vyser !"
+    noPowerMsg: "<##D94B9B>&lLe Souffle Vyser n'a plus de pouvoir ! Rechargez le avec de l'essence de magie Vyser !"
+    firstTimeMsg: "<##F7CDF7>&lLe Souffle Vyser ravive ses pouvoirs. Faites <##FAD365>&l/svyserinfo <##F7CDF7>&lpour voir sa durabilité !"
     pmsg: &d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande.
 #=================================================== Functions
 function svyserInfo(p: player, p2: player):
     if {_p2} is {_p}:
         if {_p}'s tool is {souffleVyser}:
             set {_d} to {souffleVyser.durability.%uuid of {_p}%}/{@durabilityMax}*100
-            send "<##D94B9B>- Infos Souffle Vyser -" to {_p}
-            send "<##D94B9B>Durabilité : %{_d}%%%" to {_p}
+            send "<##F7CDF7>&l- Infos Souffle Vyser -" to {_p}
+            send "<##D94B9B>Durabilité : <##FAD365>&l%{_d}%%%" to {_p}
         else:
             send "&cVous devez avoir le Souffle Vyser en main pour effectuer cette commande." to {_p}
     else:
-        send "<##D94B9B>- Infos Souffle Vyser -" to {_p2}
+        send "<##F7CDF7>- Infos Souffle Vyser -" to {_p2}
         set {_d} to {souffleVyser.durability.%uuid of {_p}%}/{@durabilityMax}*100
-        send "<##D94B9B>Durabilité : %{_d}%%%" to {_p2}
+        send "<##D94B9B>Durabilité : <##FAD365>&l%{_d}%%%" to {_p2}
 
 #======
 function svyserCheckDura(p: player):
@@ -34,11 +35,15 @@ function svyserRecharge(p: player):
             add 0.25*{@durabilityMax} to {souffleVyser.durability.%uuid of {_p}%}
         remove 1 of {souffleVyser.rechargeItem} from {_p}'s inventory
         set {_d} to {souffleVyser.durability.%uuid of {_p}%}/{@durabilityMax}*100
-        send "<##D94B9B>Pouvoir du Souffle Vyser rechargé à %{_d}%%%" to {_p}
+        send "<##D94B9B>&lPouvoir du Souffle Vyser rechargé à <##FAD365>&l%{_d}%%%" to {_p}
 #=================================================== Effets Souffle Vyser
 on right click:
     if player's tool is {souffleVyser}:
         if {souffleVyser.bond.%uuid of player%} is not set:
+            if player is not op:
+                if {souffleVyser.durability.%uuid of player%} is not set:
+                    set {souffleVyser.durability.%uuid of player%} to {@durabilityMax}
+                    send {@firstTimeMsg} to player
             if {souffleVyser.durability.%uuid of player%} is equal to 0:
                 send {@noPowerMsg} to player
                 stop
@@ -54,13 +59,17 @@ on right click:
                     wait 1 second
                 delete {souffleVyser.bond.%uuid of player%}
         else:
-            send "<##D94B9B>Cooldown Volucité : %{souffleVyser.bond.%uuid of player%}%s" to player
+            send "<##D94B9B>Cooldown Volucité : <##FAD365>%{souffleVyser.bond.%uuid of player%}%s" to player
     else if name of player's tool is name of {souffleVyser.rechargeItem}:
         svyserRecharge(player)
 #======
 on damage:
     if attacker is not op:
         if attacker's tool is {souffleVyser}:
+            if attacker is not op:
+                if {souffleVyser.durability.%uuid of attacker%} is not set:
+                    set {souffleVyser.durability.%uuid of attacker%} to {@durabilityMax}
+                    send {@firstTimeMsg} to attacker
             if {souffleVyser.durability.%uuid of attacker%} is greater than 0:
                 remove 1 from {souffleVyser.durability.%uuid of attacker%}
                 svyserCheckDura(attacker)
@@ -73,6 +82,7 @@ on tool change:
         if player is not op:
             if {souffleVyser.durability.%uuid of player%} is not set:
                 set {souffleVyser.durability.%uuid of player%} to {@durabilityMax}
+                send {@firstTimeMsg} to player
         set {souffleVyser.loop.%uuid of player%} to true
         while {souffleVyser.loop.%uuid of player%} is true:
             apply speed without particles to player for 1 second
@@ -110,7 +120,7 @@ command /svyserrecharge [<player>] [<number>]:
             set {souffleVyser.durability.%uuid of {_p}%} to {@durabilityMax}
         else:
             set {souffleVyser.durability.%uuid of {_p}%} to arg-2
-        send "<##D94B9B>Le pouvoir du Souffle Vyser a été restauré" to {_p}
+        send "<##F7CDF7>&lLe pouvoir du Souffle Vyser a été restauré" to {_p}
 #======
 command /svysersetitem:
     permission: svyser.setitem
