@@ -14,7 +14,7 @@ function svyserInfo(p: player, p2: player):
         else:
             send "&cVous devez avoir le Souffle Vyser en main pour effectuer cette commande." to {_p}
     else:
-        send "<##F7CDF7>- Infos Souffle Vyser -" to {_p2}
+        send "<##F7CDF7>&l- Infos Souffle Vyser -" to {_p2}
         set {_d} to {souffleVyser.durability.%uuid of {_p}%}/{@durabilityMax}*100
         send "<##D94B9B>Durabilité : <##FAD365>&l%{_d}%%%" to {_p2}
 
