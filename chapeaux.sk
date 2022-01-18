@@ -81,9 +81,10 @@ on right click:
             send "&cVeuillez patienter &6%{chapeau_cd.%uuid of player%}%&6s &cpour changer de chapeau" to player
             stop
         else:
-            set player's tool to helmet of player
-            wait 0.2 seconds
-            set helmet of player to event-item
+            set {_hat} to player's tool
+            set {_head} to helmet of player
+            set player's tool to {_head}
+            set helmet of player to {_hat}
             send "&eChapeau équipé !" to player
             if player is not op:
                 set {chapeau_cd.%uuid of player%} to 4
