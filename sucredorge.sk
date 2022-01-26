@@ -15,8 +15,26 @@ on right click:
         else:
             send "&eCooldown Saturation : %{SOPiocheSat.%uuid of player%}%s" to player
 
+on quit:
+    if {SOPiocheSat.%uuid of player%} is set:
+        delete {SOPiocheSat.%uuid of player%}
+
 command /setsucredorgepioche:
     permission: op
     permission message: {@pmsg}
     trigger:
         set {sucreDorgePioche} to player's tool
+
+command /getcdsucredorge <offlineplayer>:
+    permission: op
+    permission message: {@pmsg}
+    trigger:
+        send "&eCD : %{SOPiocheSat.%uuid of arg-1%}%" to player
+        
+command /resetcdsucredorge <offlineplayer>:
+    permission: op
+    permission message: {@pmsg}
+    trigger:
+        if {SOPiocheSat.%uuid of arg-1%} is set:
+            delete {SOPiocheSat.%uuid of arg-1%}
+            send "&aCD du sucre d'orge reset" to player
