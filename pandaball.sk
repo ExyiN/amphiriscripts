@@ -58,20 +58,21 @@ function pandaballStart():
     set {pandaball.score.bleu} to 0
     loop all players:
         if loop-player is in region "pandaball":
-            set gamemode of loop-player to adventure
-            wait 2 tick
-            give loop-player 1 of {_pandaball.ItemKB}
-            if loop-player is in region "pandaballcamprouge":
-                set helmet of loop-player to {_pandaball.redArmor.helmet}
-                set chestplate of loop-player to {_pandaball.redArmor.chest}
-                set leggings of loop-player to {_pandaball.redArmor.leggings}
-                set boots of loop-player to {_pandaball.redArmor.boots}
-            else if loop-player is in region "pandaballcampbleu":
-                set helmet of loop-player to {_pandaball.blueArmor.helmet}
-                set chestplate of loop-player to {_pandaball.blueArmor.chest}
-                set leggings of loop-player to {_pandaball.blueArmor.leggings}
-                set boots of loop-player to {_pandaball.blueArmor.boots}
-            give loop-player 64 of golden carrot
+            if loop-player is not op:
+                set gamemode of loop-player to adventure
+                wait 2 tick
+                give loop-player 1 of {_pandaball.ItemKB}
+                if loop-player is in region "pandaballcamprouge":
+                    set helmet of loop-player to {_pandaball.redArmor.helmet}
+                    set chestplate of loop-player to {_pandaball.redArmor.chest}
+                    set leggings of loop-player to {_pandaball.redArmor.leggings}
+                    set boots of loop-player to {_pandaball.redArmor.boots}
+                else if loop-player is in region "pandaballcampbleu":
+                    set helmet of loop-player to {_pandaball.blueArmor.helmet}
+                    set chestplate of loop-player to {_pandaball.blueArmor.chest}
+                    set leggings of loop-player to {_pandaball.blueArmor.leggings}
+                    set boots of loop-player to {_pandaball.blueArmor.boots}
+                give loop-player 64 of golden carrot
             send title "&6&lDébut du match !" with subtitle "&c&l%{pandaball.score.rouge}% &7&l- &9&l%{pandaball.score.bleu}%" to loop-player for 2 seconds
     pandaballSpawn()
 
@@ -87,9 +88,10 @@ function pandaballStop():
     delete {pandaball.lastAttacker}
     loop all players:
         if loop-player is in region "pandaball":
-            clear inventory of loop-player
-            wait 2 tick
-            set gamemode of loop-player to survival
+            if loop-player is not op:
+                clear inventory of loop-player
+                wait 2 tick
+                set gamemode of loop-player to survival
             if {pandaball.score.rouge} is equal to {pandaball.score.bleu}:
                 send title "&6&lÉgalité !" with subtitle "&c&l%{pandaball.score.rouge}% &7&l- &9&l%{pandaball.score.bleu}%" to loop-player for 5 seconds
             else if {pandaball.score.rouge} is greater than {pandaball.score.bleu}:
