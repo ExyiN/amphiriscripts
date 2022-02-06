@@ -1,0 +1,186 @@
+# [Amphiris pandaball]
+#===================================================
+options:
+    pmsg: &d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande.
+    guiName: &5&lPandaBall
+#=================================================== Functions
+function pandaballHelp(p : player):
+    send "&e/pandaball <start/stop>" to {_p}
+
+function pandaballSetspawn(p : player):
+    if {_p} is in region "pandaball":
+        set {pandaball.spawnloc} to location of {_p}
+        send "&aPoint de spawn de la balle définie" to {_p}
+    else:
+        send "&cVous n'êtes pas dans le terrain de pandaball" to {_p}
+
+function pandaballSpawn():
+    spawn 1 panda at {pandaball.spawnloc}
+    set {pandaball.ball} to last spawned panda
+    set name of {pandaball.ball} to "&6&lPandaBall"
+    apply resistance 5 without particles to {pandaball.ball} for 999 days
+    apply weakness 999 without particles to {pandaball.ball} for 999 days
+    apply slowness 999 without particles to {pandaball.ball} for 999 days
+    set {pandaball.game} to true
+
+function pandaballGoal():
+    set {pandaball.game} to false
+    kill {pandaball.ball}
+    loop all players:
+        if loop-player is in region "pandaball":
+            send title "&e&l%{pandaball.lastAttacker}% &6&la marqué !" with subtitle "&c&l%{pandaball.score.rouge}% &7&l- &9&l%{pandaball.score.bleu}%" to loop-player for 2 seconds
+    wait 3 seconds
+    pandaballSpawn()
+
+function pandaballStart():
+    if {pandaball.game} is set:
+        stop
+    set {_pandaball.ItemKB} to unbreakable netherite hoe named "&5&lPanda Shooter"
+    enchant {_pandaball.ItemKB} with knockback 5
+    set {_pandaball.redArmor.helmet} to unbreakable leather helmet
+    set {_pandaball.blueArmor.helmet} to unbreakable leather helmet
+    set {_pandaball.redArmor.chest} to unbreakable leather chestplate
+    set {_pandaball.blueArmor.chest} to unbreakable leather chestplate
+    set {_pandaball.redArmor.leggings} to unbreakable leather leggings
+    set {_pandaball.redArmor.leggings} to unbreakable leather leggings
+    set {_pandaball.redArmor.boots} to unbreakable leather boots
+    set {_pandaball.blueArmor.boots} to unbreakable leather boots
+    dye {_pandaball.redArmor.helmet} black
+    dye {_pandaball.redArmor.chest} red
+    dye {_pandaball.redArmor.leggings} black
+    dye {_pandaball.redArmor.boots} red
+    dye {_pandaball.blueArmor.helmet} black
+    dye {_pandaball.blueArmor.chest} blue
+    dye {_pandaball.blueArmor.leggings} black
+    dye {_pandaball.blueArmor.boots} blue
+
+    set {pandaball.score.rouge} to 0
+    set {pandaball.score.bleu} to 0
+    loop all players:
+        if loop-player is in region "pandaball":
+            set gamemode of loop-player to adventure
+            wait 2 tick
+            give loop-player 1 of {_pandaball.ItemKB}
+            if loop-player is in region "pandaballcamprouge":
+                set helmet of loop-player to {_pandaball.redArmor.helmet}
+                set chestplate of loop-player to {_pandaball.redArmor.chest}
+                set leggings of loop-player to {_pandaball.redArmor.leggings}
+                set boots of loop-player to {_pandaball.redArmor.boots}
+            else if loop-player is in region "pandaballcampbleu":
+                set helmet of loop-player to {_pandaball.blueArmor.helmet}
+                set chestplate of loop-player to {_pandaball.blueArmor.chest}
+                set leggings of loop-player to {_pandaball.blueArmor.leggings}
+                set boots of loop-player to {_pandaball.blueArmor.boots}
+            give loop-player 64 of golden carrot
+            send title "&6&lDébut du match !" with subtitle "&c&l%{pandaball.score.rouge}% &7&l- &9&l%{pandaball.score.bleu}%" to loop-player for 2 seconds
+    pandaballSpawn()
+
+function pandaballStop():
+    if {pandaball.game} is not set:
+        stop
+    
+    while {pandaball.game} is false:
+        wait 1 tick
+
+    kill {pandaball.ball}
+    delete {pandaball.ball}
+    delete {pandaball.lastAttacker}
+    loop all players:
+        if loop-player is in region "pandaball":
+            clear inventory of loop-player
+            wait 2 tick
+            set gamemode of loop-player to survival
+            if {pandaball.score.rouge} is equal to {pandaball.score.bleu}:
+                send title "&6&lÉgalité !" with subtitle "&c&l%{pandaball.score.rouge}% &7&l- &9&l%{pandaball.score.bleu}%" to loop-player for 5 seconds
+            else if {pandaball.score.rouge} is greater than {pandaball.score.bleu}:
+                send title "&6&lVictoire des &c&lRouges &6&l!" with subtitle "&c&l%{pandaball.score.rouge}% &7&l- &9&l%{pandaball.score.bleu}%" to loop-player for 5 seconds
+            else:
+                send title "&6&lVictoire des &9&lBleus &6&l!" with subtitle "&c&l%{pandaball.score.rouge}% &7&l- &9&l%{pandaball.score.bleu}%" to loop-player for 5 seconds
+    if {pandaball.score.rouge} is equal to {pandaball.score.bleu}:
+        set {_color} to purple
+    else if {pandaball.score.rouge} is greater than {pandaball.score.bleu}:
+        set {_color} to red
+    else:
+        set {_color} to blue
+
+    loop 5 times:
+        launch trailing flickering star colored {_color} at {pandaball.spawnloc}
+        wait 10 ticks
+    delete {pandaball.score.rouge}
+    delete {pandaball.score.bleu}
+    delete {pandaball.game}
+
+function pandaballGUI(p : player):
+    open chest with 1 row named "&5&lPandaBall" to {_p}
+    wait 1 tick
+    set slot 2 of {_p}'s current inventory to lime concrete named "&a&lStart"
+    set slot 6 of {_p}'s current inventory to red concrete named "&c&lStop"
+#=================================================== Events
+on damage:
+    if {pandaball.game} is true:
+        if victim is {pandaball.ball}:
+            set {pandaball.lastAttacker} to name of attacker
+
+every 0.5 second in "azerty":
+    if {pandaball.game} is true:
+        if {pandaball.ball} is in region "pb_cage_rouge":
+            add 1 to {pandaball.score.bleu}
+            set {_firework} to location of {pandaball.ball}
+            add 7 to y-loc of {_firework}
+            launch trailing flickering star colored blue at {_firework}
+            pandaballGoal()
+        if {pandaball.ball} is in region "pb_cage_bleue":
+            add 1 to {pandaball.score.rouge}
+            set {_firework} to location of {pandaball.ball}
+            add 7 to y-loc of {_firework}
+            launch trailing flickering star colored red at {_firework}
+            pandaballGoal()
+
+on inventory click:
+    if inventory name of player's current inventory is "&5&lPandaBall":
+        if clicked slot is 2:
+            make player execute command "/pandaball start"
+            close inventory of player
+        else if clicked slot is 6:
+            make player execute command "/pandaball stop"
+            close inventory of player
+#=================================================== Commands
+command /pandaball [<text>]:
+    permission: pandaball.admin
+    permission message: {@pmsg}
+    trigger:
+        if arg-1 is not set:
+            pandaballGUI(player)
+            stop
+
+        if arg-1 is not "start":
+            if arg-1 is not "stop":
+                if arg-1 is not "setspawn":
+                    pandaballHelp(player)
+                    stop
+        
+        if arg-1 is "setspawn":
+            pandaballSetspawn(player)
+            stop
+
+        if {pandaball.spawnloc} is not set:
+            send "&cPoint de spawn de la balle non définie. Définissez la avec /pandaball setspawn" to player
+            stop
+
+        if arg-1 is "start":
+            pandaballStart()
+            stop
+
+        if arg-1 is "stop":
+            pandaballStop()
+            stop
+
+command /pandakiller:
+    permission: pandakiller.use
+    permission message: {@pmsg}
+    trigger:
+        give player 1 of sunflower named "&4&lPanda KILLER"
+
+on damage:
+    if name of attacker's tool is "&4&lPanda KILLER":
+        kill victim
