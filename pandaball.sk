@@ -35,14 +35,16 @@ function pandaballGoal():
 function pandaballStart():
     if {pandaball.game} is set:
         stop
-    set {_pandaball.ItemKB} to unbreakable netherite hoe named "&5&lPanda Shooter"
-    enchant {_pandaball.ItemKB} with knockback 5
+    set {pandaball.ItemKB3} to unbreakable golden hoe named "&5&lPanda Shooter lv.3" with lore "&eEffet au clic : &6Dash &7(CD : 12s)"
+    enchant {pandaball.ItemKB3} with knockback 3
+    set {_pandaball.ItemKB5} to unbreakable netherite hoe named "&5&lPanda Shooter lv.5"
+    enchant {_pandaball.ItemKB5} with knockback 5
     set {_pandaball.redArmor.helmet} to unbreakable leather helmet
     set {_pandaball.blueArmor.helmet} to unbreakable leather helmet
     set {_pandaball.redArmor.chest} to unbreakable leather chestplate
     set {_pandaball.blueArmor.chest} to unbreakable leather chestplate
     set {_pandaball.redArmor.leggings} to unbreakable leather leggings
-    set {_pandaball.redArmor.leggings} to unbreakable leather leggings
+    set {_pandaball.blueArmor.leggings} to unbreakable leather leggings
     set {_pandaball.redArmor.boots} to unbreakable leather boots
     set {_pandaball.blueArmor.boots} to unbreakable leather boots
     dye {_pandaball.redArmor.helmet} black
@@ -61,7 +63,8 @@ function pandaballStart():
             if loop-player is not op:
                 set gamemode of loop-player to adventure
                 wait 2 tick
-                give loop-player 1 of {_pandaball.ItemKB}
+                give loop-player 1 of {pandaball.ItemKB3}
+                give loop-player 1 of {_pandaball.ItemKB5}
                 if loop-player is in region "pandaballcamprouge":
                     set helmet of loop-player to {_pandaball.redArmor.helmet}
                     set chestplate of loop-player to {_pandaball.redArmor.chest}
@@ -72,7 +75,6 @@ function pandaballStart():
                     set chestplate of loop-player to {_pandaball.blueArmor.chest}
                     set leggings of loop-player to {_pandaball.blueArmor.leggings}
                     set boots of loop-player to {_pandaball.blueArmor.boots}
-                give loop-player 64 of golden carrot
             send title "&6&lDébut du match !" with subtitle "&c&l%{pandaball.score.rouge}% &7&l- &9&l%{pandaball.score.bleu}%" to loop-player for 2 seconds
     pandaballSpawn()
 
@@ -110,13 +112,19 @@ function pandaballStop():
         wait 10 ticks
     delete {pandaball.score.rouge}
     delete {pandaball.score.bleu}
+    delete {pandaball.ItemKB3}
     delete {pandaball.game}
 
 function pandaballGUI(p : player):
     open chest with 1 row named "&5&lPandaBall" to {_p}
     wait 1 tick
-    set slot 2 of {_p}'s current inventory to lime concrete named "&a&lStart"
+    format slot 2 of {_p} with lime concrete named "&a&lStart" to close
     set slot 6 of {_p}'s current inventory to red concrete named "&c&lStop"
+
+function pandaballShowScore():
+    loop all players:
+        if loop-player is in region "pandaball":
+            send action bar "&c&l%{pandaball.score.rouge}% &7&l- &9&l%{pandaball.score.bleu}%" to loop-player
 #=================================================== Events
 on damage:
     if {pandaball.game} is true:
@@ -137,22 +145,28 @@ every 0.5 second in "azerty":
             add 7 to y-loc of {_firework}
             launch trailing flickering star colored red at {_firework}
             pandaballGoal()
+        pandaballShowScore()
 
-on inventory click:
-    if inventory name of player's current inventory is "&5&lPandaBall":
-        if clicked slot is 2:
-            make player execute command "/pandaball start"
-            close inventory of player
-        else if clicked slot is 6:
-            make player execute command "/pandaball stop"
-            close inventory of player
+on right click:
+    if player's tool is {pandaball.ItemKB3}:
+        if {pandaball.CDDash.%uuid of player%} is not set:
+            push the player upwards at speed 0.5
+            push the player forwards at speed 1
+            play sound "entity.horse.breathe" with volume 1 and pitch 2 at location of player
+            set {pandaball.CDDash.%uuid of player%} to 12
+            while {pandaball.CDDash.%uuid of player%} is greater than 0:
+                remove 1 from {pandaball.CDDash.%uuid of player%}
+                wait 1 second
+            delete {pandaball.CDDash.%uuid of player%}
+        else:
+            send "&eCD Dash : %{pandaball.CDDash.%uuid of player%}%s" to player
 #=================================================== Commands
 command /pandaball [<text>]:
     permission: pandaball.admin
     permission message: {@pmsg}
     trigger:
         if arg-1 is not set:
-            pandaballGUI(player)
+            pandaballHelp(player)
             stop
 
         if arg-1 is not "start":
