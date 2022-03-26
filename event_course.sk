@@ -1,0 +1,7 @@
+on right click with pig spawn egg:
+    if name of player's tool is "&6&lCochon de course":
+        cancel event
+        spawn 1 pig at player's location
+        set name of last spawned pig to "&6&lCochon de %player's display name%"
+        make the last spawned pig wear a saddle
+        remove 1 of event-item from player's inventory

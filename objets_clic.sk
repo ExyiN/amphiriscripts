@@ -44,6 +44,10 @@ on right click:
    else if name of offhand tool is "&d&l⚫ &4&l⸸ &5&l&nSceptre de l’Étoile du Matin&r &4&l⸸ &d&l⚫":
       cancel event
       make console execute command "/execute as %player% at @s run function namespace:samael"
+   else if name of event-item is "&6&lClef sulfureuse":
+      cancel event
+      make console execute command "/tag %player% add feuclef"
+      remove 1 of event-item from player's inventory
 #===================================================
 on place:
    if name of player's tool is "&5&l⌛ &d&l&nAxe du destin&r &5&l⌛":
