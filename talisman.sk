@@ -461,6 +461,9 @@ on right click:
          set {_nomParch} to "cauchemar"
          make console execute command "/execute as %player% at @s[scores={magie=%{_magie}%..},tag=unlockSPE%{parchemin::%name of event-item%::1}%] at @s unless entity @e[distance=..250,tag=anihi] run function namespace:%{_nomParch}%"
          stop
+      else if {parchemin::%name of event-item%::1} is "13":
+         set {_magie} to 800
+         set {_nomParch} to "confringo"
 
       make console execute command "/execute as %player% at @s[tag=unlockSPE%{parchemin::%name of event-item%::1}%,scores={magie=%{_magie}%..}] unless entity @e[distance=..250,tag=anihi] run function namespace:%{_nomParch}%"
       #======
