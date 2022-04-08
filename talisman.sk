@@ -467,7 +467,7 @@ on right click:
       else if {parchemin::%name of event-item%::1} is "14":
          set {_magie} to 650
          set {_nomParch} to "corporesano"
-         make console execute command "/execute if entity @s[scores={magie=%{_magie}%..},tag=unlockSPE%{parchemin::%name of event-item%::1}%] run function namespace:%{_nomParch}%"
+         make console execute command "/execute as %player% at @s[scores={magie=%{_magie}%..},tag=unlockSPE%{parchemin::%name of event-item%::1}%] run function namespace:%{_nomParch}%"
          stop
          
       make console execute command "/execute as %player% at @s[tag=unlockSPE%{parchemin::%name of event-item%::1}%,scores={magie=%{_magie}%..}] unless entity @e[distance=..250,tag=anihi] run function namespace:%{_nomParch}%"
