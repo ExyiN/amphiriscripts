@@ -413,3 +413,8 @@ command /discord:
 command /site:
    trigger:
       send "&e&lClique <link:https://amphiris.fr><##B388EB>&lici<reset> &e&lpour obtenir le lien." to player
+#===================================================
+#Item frames
+command /itemframe:
+   trigger:
+      make player execute command "/cp panel-136"
