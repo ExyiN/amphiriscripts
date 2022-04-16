@@ -2,6 +2,7 @@ command /paquesadd:
     permission: amph.paques.use
     trigger:
         add location of block under player to {event.paques.eggs::*}
+        send "&aOeuf ajouté à la liste" to player
 
 command /paqueslist:
     permission: amph.paques.use
@@ -14,18 +15,21 @@ command /paquesdellist:
     permission: amph.paques.use
     trigger:
         clear {event.paques.eggs::*}
+        send "&aListe des oeufs supprimée" to player
 
 command /paquesreset <player>:
     permission: amph.paques.use
     trigger:
         clear {paquesEggs.%uuid of arg-1%::*}
         delete {paquesCount.%uuid of arg-1%}
+        send "&aJoueur &e%arg-1% &aréinitialisé" to player
 
 command /paquesplist <player>:
     permission: amph.paques.use
     trigger:
+        send "&eListe des oeufs trouvés :" to player
         loop {paquesEggs.%uuid of arg-1%::*}:
-            send "%loop-index% : %loop-value%" to player
+            send "&6%loop-index%" to player
 
 command /paquesresetall:
     permission: amph.paques.use
@@ -33,6 +37,12 @@ command /paquesresetall:
         loop all offline players:
             clear {paquesEggs.%uuid of loop-offlineplayer%::*}
             delete {paquesCount.%uuid of loop-offlineplayer%}
+        send "&aTous les joueurs ont été réinitialisés" to player
+
+command /paquestp <number>:
+    permission: amph.paques.use
+    trigger:
+        teleport player to {event.paques.eggs::%arg-1%}
     
 on right click:
     loop {event.paques.eggs::*}:
@@ -51,3 +61,7 @@ on right click:
 
             exit loop
 
+every 1 second in "azerty":
+    loop all players:
+        if name of loop-player's helmet is "&a&lOreilles de célérité":
+            apply jump boost 2 without particles to loop-player for 1 seconds 
