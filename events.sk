@@ -1,0 +1,19 @@
+options:
+    pmsg: &d&l[&6&l⌛&d&l] &4Vous n'avez pas accès à cette commande.
+
+command /eventclaim:
+    permission: amph.event.claim
+    permission message: {@pmsg}
+    trigger:
+        give 1 of {event.reward} to player
+        set {_event.reward.name} to name of {event.reward}
+        send "&e&lVous avez obtenu %{_event.reward.name}%" to player
+        make console execute command "/lp user %player% permission unset amph.event.claim"
+
+command /eventset:
+    permission: amph.event.set
+    permission message: {@pmsg}
+    trigger:
+        set {event.reward} to player's tool
+        set {_event.reward.name} to name of {event.reward}
+        send "&e&lRécompense : %{_event.reward.name}%" to player

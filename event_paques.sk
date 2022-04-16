@@ -1,0 +1,53 @@
+command /paquesadd:
+    permission: amph.paques.use
+    trigger:
+        add location of block under player to {event.paques.eggs::*}
+
+command /paqueslist:
+    permission: amph.paques.use
+    trigger:
+        send "&e&lNombre d'oeufs : &9&l%size of {event.paques.eggs::*}%" to player
+        loop {event.paques.eggs::*}:
+            send "&6%loop-index% &7- &a%loop-value%" to player
+
+command /paquesdellist:
+    permission: amph.paques.use
+    trigger:
+        clear {event.paques.eggs::*}
+
+command /paquesreset <player>:
+    permission: amph.paques.use
+    trigger:
+        clear {paquesEggs.%uuid of arg-1%::*}
+        delete {paquesCount.%uuid of arg-1%}
+
+command /paquesplist <player>:
+    permission: amph.paques.use
+    trigger:
+        loop {paquesEggs.%uuid of arg-1%::*}:
+            send "%loop-index% : %loop-value%" to player
+
+command /paquesresetall:
+    permission: amph.paques.use
+    trigger:
+        loop all offline players:
+            clear {paquesEggs.%uuid of loop-offlineplayer%::*}
+            delete {paquesCount.%uuid of loop-offlineplayer%}
+    
+on right click:
+    loop {event.paques.eggs::*}:
+        if location of clicked block is loop-value:
+            if {paquesEggs.%uuid of player%::%loop-index%} is set:
+                send "&eOeuf déjà trouvé !" to player
+                exit loop
+            add 1 to {paquesCount.%uuid of player%}
+            set {paquesEggs.%uuid of player%::%loop-index%} to true
+            send "&a&lOeuf trouvé ! &e(%{paquesCount.%uuid of player%}%/%size of {event.paques.eggs::*}%)" to player
+
+            if {paquesCount.%uuid of player%} is equal to size of {event.paques.eggs::*}:
+                send "&6&lVous avez trouvé tous les oeufs !" to player
+                send "&e&lFaites &6&l/eventclaim &e&lpour obtenir votre récompense !" to player
+                make console execute command "/lp user %player% permission set amph.event.claim"
+
+            exit loop
+
