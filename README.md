@@ -54,3 +54,6 @@ on right click:
     
     // etc.
 ```
+
+> Ne pas oublier de reload le skript pour que les modifications soient prises en compte.
+> `/sk reload cliquable-objects.sk` pour reload le fichier.
