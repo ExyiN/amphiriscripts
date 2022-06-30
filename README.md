@@ -12,7 +12,7 @@ on right click: // clic droit
 on left click: // clic gauche
 ```
 #### Clic d'un objet dans la main principale :
-```c
+```
 if name of player's tool is "nom":
     cancel event
     make player execute command "commande" // Joueur qui exécute
@@ -21,7 +21,7 @@ if name of player's tool is "nom":
 ```
 
 #### Clic d'un objet dans la main secondaire :
-```c
+```
 if name of offhand tool is "nom":
     cancel event
     make player execute command "commande" // Joueur qui exécute
@@ -38,7 +38,7 @@ Quand vous ajoutez un objet, mettez un commentaire pour savoir ce que fait l'obj
 Pour mettre un commentaire dans un fichier, il faut utiliser le caractère `#`.
 
 **Exemple de structure :**
-```c
+```
 on right click:
     # Objet qui fait coucou à Robert
     if name of player's tool is "Robert":
