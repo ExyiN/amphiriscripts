@@ -6,5 +6,5 @@ on right click:
     # Objet qui envoie un message à Zarrrrrrrre
     if name of player's tool is "&6Exemple":
         cancel event
-        make console execute player "/msg Zares_ Ceci est un exemple"
+        make console execute command "/msg Zares_ Ceci est un exemple"
         stop
